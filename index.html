@@ -5,386 +5,409 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compte Partagé</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #0d1b2e; --surface: #162540; --surface2: #1e3254; --border: #2a4570;
     --text: #e8eef5; --muted: #7a96b8; --orange: #f5a623; --orange-dark: #d4891a;
-    --accent-a: #f5a623; --accent-b: #4db8e8; --accent-total: #5dd88a;
-    --red: #e05a5a; --green: #5dd88a; --radius: 14px; --radius-sm: 8px;
+    --accent-a: #f5a623; --accent-b: #4db8e8;
+    --red: #e05a5a; --green: #5dd88a; --radius: 12px; --radius-sm: 7px;
   }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 16px 12px 60px; font-size: 14px; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 14px 10px 50px; font-size: 13px; }
 
-  header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-  header h1 { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
-  header p { color: var(--muted); font-size: 0.68rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+  h1 { text-align:center; color: var(--orange); font-size: 1.3rem; font-weight:700; margin-bottom: 3px; }
+  .subtitle { text-align:center; color: var(--muted); font-size:0.65rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px; }
 
-
-  /* Solde commun */
-  .solde-commun {
+  /* Bloc solde commun */
+  .top-card {
     background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--orange);
-    border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px;
-    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+    border-radius: var(--radius); padding: 12px 14px; margin-bottom: 12px;
   }
-  .solde-block { min-width: 160px; }
-  .solde-block h2 { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-  .solde-val { font-size: 1.5rem; font-weight: 700; color: var(--orange); }
-  .solde-edit-wrap { display: flex; align-items: center; gap: 6px; }
-  .btn-edit-bal { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 0.8rem; padding: 2px 5px; border-radius: 4px; transition: color .15s; }
-  .btn-edit-bal:hover { color: var(--orange); }
-  .bal-input-inline { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; width: 120px; text-align: center; }
-  .bal-input-inline:focus { outline: none; }
-  .solde-recap { display: flex; gap: 20px; flex-wrap: wrap; }
-  .recap-item { text-align: center; }
-  .recap-item label { display: block; color: var(--muted); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-  .recap-item span { font-size: 1rem; font-weight: 700; }
-  .neg { color: var(--red); } .pos { color: var(--green); } .ora { color: var(--orange); }
+  .top-card h2 { font-size: 0.62rem; color: var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px; }
+  .solde-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .solde-val { font-size:1.6rem; font-weight:700; }
+  .btn-pencil { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.9rem; padding:3px 5px; }
+  .btn-pencil:hover { color:var(--orange); }
+  .bal-input { background:var(--bg); border:1px solid var(--orange); color:var(--text); font-family:'Inter',sans-serif; font-size:1.2rem; font-weight:700; padding:5px 8px; border-radius:6px; width:130px; }
+  .bal-input:focus { outline:none; }
+  .btn-ok { background:var(--green); color:#0d1b2e; border:none; border-radius:6px; padding:5px 10px; font-weight:700; font-size:0.8rem; cursor:pointer; }
+
+  .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-radius:6px; overflow:hidden; }
+  .sum-cell { background:var(--surface2); padding:8px 6px; text-align:center; }
+  .sum-cell label { display:block; color:var(--muted); font-size:0.57rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+  .sum-cell span { font-size:0.9rem; font-weight:700; }
 
   /* Noms */
-  .settings-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 14px; }
-  .name-group { display: flex; align-items: center; gap: 7px; }
-  .settings-bar label { color: var(--muted); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  .name-input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; padding: 6px 10px; border-radius: var(--radius-sm); width: 100px; transition: border-color .2s; }
-  .name-input:focus { outline: none; border-color: var(--orange); }
-  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .dot-a { background: var(--accent-a); } .dot-b { background: var(--accent-b); }
+  .names-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:10px 12px; margin-bottom:12px; }
+  .name-grp { display:flex; align-items:center; gap:6px; }
+  .names-bar label { color:var(--muted); font-size:0.65rem; text-transform:uppercase; letter-spacing:.08em; }
+  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .dot-a { background:var(--accent-a); } .dot-b { background:var(--accent-b); }
+  .name-input { background:var(--surface2); border:1px solid var(--border); color:var(--text); font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:500; padding:5px 8px; border-radius:var(--radius-sm); width:95px; }
+  .name-input:focus { outline:none; border-color:var(--orange); }
 
-  /* Grid */
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-bottom: 14px; }
+  /* Panels */
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; margin-bottom:12px; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .panel-a { border-top:3px solid var(--accent-a); }
+  .panel-b { border-top:3px solid var(--accent-b); }
+  .panel-total { border-top:3px solid var(--green); }
+  .panel-head { padding:10px 12px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+  .panel-head strong { font-size:0.9rem; flex:1; }
 
-  /* Panel */
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-  .panel-a  { border-top: 3px solid var(--accent-a); }
-  .panel-b  { border-top: 3px solid var(--accent-b); }
-  .panel-total { border-top: 3px solid var(--accent-total); }
-  .panel-header { padding: 11px 14px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid var(--border); }
-  .panel-title { font-size: 0.95rem; font-weight: 700; flex: 1; }
+  /* Stats mini */
+  .mini-stats { display:flex; background:var(--border); gap:1px; border-bottom:1px solid var(--border); }
+  .ms-cell { background:var(--surface2); flex:1; padding:7px 5px; text-align:center; }
+  .ms-cell label { display:block; color:var(--muted); font-size:0.55rem; text-transform:uppercase; letter-spacing:.07em; margin-bottom:2px; }
+  .ms-cell span { font-size:0.82rem; font-weight:700; }
 
-  /* Stats */
-  .stats-row { display: flex; background: var(--border); gap: 1px; border-bottom: 1px solid var(--border); }
-  .stat-cell { background: var(--surface2); flex: 1; padding: 9px 6px; text-align: center; }
-  .stat-cell label { display: block; color: var(--muted); font-size: 0.57rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-  .stat-cell span { font-size: 0.88rem; font-weight: 700; }
+  /* Formulaire */
+  .add-row { padding:8px 10px; display:flex; gap:5px; flex-wrap:wrap; background:var(--surface2); border-bottom:1px solid var(--border); }
+  .add-row input, .add-row select { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:'Inter',sans-serif; font-size:0.75rem; padding:6px 7px; border-radius:var(--radius-sm); }
+  .add-row input:focus, .add-row select:focus { outline:none; border-color:var(--orange); }
+  .f-date { width:65px; } .f-label { flex:1; min-width:80px; } .f-amt { width:75px; }
+  .f-type { width:85px; }
+  .f-type option { background:var(--surface2); }
+  .btn-add { border:none; font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:700; padding:6px 11px; border-radius:var(--radius-sm); cursor:pointer; white-space:nowrap; }
+  .btn-add-a { background:var(--accent-a); color:#0d1b2e; }
+  .btn-add-b { background:var(--accent-b); color:#0d1b2e; }
 
-  /* Add form */
-  .add-form { padding: 9px 10px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--border); background: var(--surface2); }
-  .add-form input, .add-form select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.76rem; padding: 7px 7px; border-radius: var(--radius-sm); transition: border-color .2s; }
-  .add-form input:focus, .add-form select:focus { outline: none; border-color: var(--orange); }
-  .add-form input.f-date  { width: 72px; }
-  .add-form input.f-label { flex: 1; min-width: 80px; }
-  .add-form input.f-amt   { width: 78px; }
-  .add-form select        { width: 92px; }
-  .add-form select option { background: var(--surface2); }
-  .btn-add { background: var(--orange); color: #0d1b2e; border: none; font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 7px 11px; border-radius: var(--radius-sm); cursor: pointer; transition: background .15s; white-space: nowrap; }
-  .btn-add:hover { background: var(--orange-dark); }
-  .panel-b .btn-add { background: var(--accent-b); }
-  .panel-b .btn-add:hover { background: #35a0cc; }
+  /* Tableau relevé */
+  .table-wrap { overflow-x:auto; max-height:300px; overflow-y:auto; }
+  .table-wrap::-webkit-scrollbar { width:3px; height:3px; }
+  .table-wrap::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  table { width:100%; border-collapse:collapse; font-size:0.73rem; }
+  thead th { background:var(--surface2); color:var(--muted); font-size:0.58rem; text-transform:uppercase; letter-spacing:.07em; padding:6px 8px; text-align:left; position:sticky; top:0; border-bottom:1px solid var(--border); }
+  th.r, td.r { text-align:right; }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
+  tbody tr:hover { background:var(--surface2); }
+  td { padding:7px 8px; }
+  td.num { color:var(--muted); width:28px; }
+  td.dep { color:var(--red); font-weight:600; }
+  td.cred { color:var(--green); font-weight:600; }
+  td.enc { color:var(--text); font-weight:600; }
+  td.rest-pos { color:var(--green); font-weight:700; }
+  td.rest-neg { color:var(--red); font-weight:700; }
+  td.owner-a { color:var(--accent-a); font-size:0.6rem; font-weight:600; }
+  td.owner-b { color:var(--accent-b); font-size:0.6rem; font-weight:600; }
+  .btn-del-row { background:none; border:none; cursor:pointer; color:var(--border); font-size:0.75rem; padding:1px 4px; border-radius:3px; }
+  .btn-del-row:hover { color:var(--red); }
+  .empty-row td { text-align:center; color:var(--muted); font-style:italic; padding:18px; }
 
-  /* Movements */
-  .movements { flex: 1; overflow-y: auto; max-height: 260px; }
-  .movements::-webkit-scrollbar { width: 4px; }
-  .movements::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-  .panel-total .movements { max-height: 300px; }
-
-  /* Header de colonne */
-  .mv-header { display: flex; align-items: center; gap: 8px; padding: 5px 12px; background: var(--surface2); border-bottom: 1px solid var(--border); }
-  .mv-header span { font-size: 0.58rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
-  .mv-header .h-date  { width: 44px; flex-shrink: 0; }
-  .mv-header .h-label { flex: 1; }
-  .mv-header .h-amt   { width: 64px; text-align: right; }
-  .mv-header .h-bal   { width: 72px; text-align: right; }
-  .mv-header .h-del   { width: 20px; }
-
-  .mv-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.74rem; transition: background .1s; }
-  .mv-item:hover { background: var(--surface2); }
-  .mv-date  { color: var(--muted); width: 44px; flex-shrink: 0; font-size: 0.68rem; }
-  .mv-label { flex: 1; }
-  .mv-badge { font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 4px; border-radius: 4px; background: var(--surface2); color: var(--muted); flex-shrink: 0; border: 1px solid var(--border); }
-  .mv-amount { font-weight: 700; font-size: 0.78rem; white-space: nowrap; width: 64px; text-align: right; }
-  .mv-amount.dep { color: var(--red); } .mv-amount.cred { color: var(--green); }
-  .mv-running { font-size: 0.75rem; font-weight: 700; white-space: nowrap; width: 72px; text-align: right; flex-shrink: 0; }
-  .mv-running.pos { color: var(--green); } .mv-running.neg { color: var(--red); } .mv-running.zero { color: var(--orange); }
-  .mv-owner-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .btn-del { background: none; border: none; cursor: pointer; color: var(--border); font-size: 0.8rem; padding: 2px 3px; border-radius: 3px; transition: color .15s; flex-shrink: 0; width: 20px; }
-  .btn-del:hover { color: var(--red); }
-  .empty-mv { padding: 20px; text-align: center; color: var(--muted); font-size: 0.72rem; font-style: italic; }
+  /* Panel total */
+  .panel-total .table-wrap { max-height:320px; }
 
   /* Actions */
-  .actions-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
-  .actions-section h3 { font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
-  .action-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
-  .btn-action { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; padding: 7px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s; }
-  .btn-action:hover { border-color: var(--orange); color: var(--orange); }
-  .btn-action.danger { border-color: rgba(224,90,90,.4); }
-  .btn-action.danger:hover { background: rgba(224,90,90,.12); border-color: var(--red); color: var(--red); }
+  .actions { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px 14px; }
+  .actions h3 { font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+  .act-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px; }
+  .btn-act { background:var(--surface2); border:1px solid var(--border); color:var(--text); font-family:'Inter',sans-serif; font-size:0.69rem; font-weight:500; padding:6px 11px; border-radius:var(--radius-sm); cursor:pointer; transition:all .15s; }
+  .btn-act:hover { border-color:var(--orange); color:var(--orange); }
+  .btn-act.danger { border-color:rgba(224,90,90,.35); }
+  .btn-act.danger:hover { background:rgba(224,90,90,.1); border-color:var(--red); color:var(--red); }
 
   /* Modal */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(5,12,25,.82); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(6px); }
-  .modal-overlay.hidden { display: none; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; max-width: 340px; width: 92%; }
-  .modal h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--orange); }
-  .modal p { color: var(--muted); font-size: 0.78rem; margin-bottom: 14px; line-height: 1.6; }
-  .modal-btns { display: flex; gap: 8px; }
-  .btn-modal { flex: 1; padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 500; cursor: pointer; transition: all .15s; }
-  .btn-modal:hover { border-color: var(--muted); }
-  .btn-modal.confirm-danger { background: rgba(224,90,90,.15); border-color: var(--red); color: var(--red); }
-  .btn-modal.confirm-danger:hover { background: rgba(224,90,90,.25); }
-  .btn-modal.confirm-ok { background: rgba(245,166,35,.15); border-color: var(--orange); color: var(--orange); }
-  .btn-modal.confirm-ok:hover { background: rgba(245,166,35,.25); }
-  .modal-input { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; padding: 7px 10px; border-radius: var(--radius-sm); width: 140px; text-align: center; display: block; margin: 10px auto 0; }
-  .modal-input:focus { outline: none; }
+  .overlay { position:fixed; inset:0; background:rgba(5,12,25,.83); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(5px); }
+  .overlay.hidden { display:none; }
+  .modal { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; max-width:320px; width:92%; }
+  .modal h3 { font-size:0.9rem; font-weight:700; color:var(--orange); margin-bottom:8px; }
+  .modal p { color:var(--muted); font-size:0.76rem; margin-bottom:14px; line-height:1.6; }
+  .modal-btns { display:flex; gap:7px; }
+  .btn-m { flex:1; padding:8px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:'Inter',sans-serif; font-size:0.74rem; font-weight:500; cursor:pointer; }
+  .btn-m.ok { background:rgba(245,166,35,.15); border-color:var(--orange); color:var(--orange); }
+  .btn-m.danger { background:rgba(224,90,90,.13); border-color:var(--red); color:var(--red); }
+  .modal-input { background:var(--bg); border:1px solid var(--orange); color:var(--text); font-family:'Inter',sans-serif; font-size:1rem; font-weight:700; padding:7px 10px; border-radius:var(--radius-sm); width:150px; text-align:center; display:block; margin:10px auto 0; }
+  .modal-input:focus { outline:none; }
+
+  .neg { color:var(--red); } .pos { color:var(--green); } .ora { color:var(--orange); }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Compte Partagé</h1>
-  <p>Suivi mensuel · Données locales</p>
-</header>
-
+<h1>Compte Partagé</h1>
+<p class="subtitle">Suivi mensuel · Données locales</p>
 
 <!-- Solde commun -->
-<div class="solde-commun">
-  <div class="solde-block">
-    <h2>Solde de départ commun</h2>
-    <div class="solde-edit-wrap">
-      <span class="solde-val ora" id="initBalDisplay">0,00 €</span>
-      <button class="btn-edit-bal" id="btnEditBal" onclick="startEditBal()" title="Modifier">✎</button>
-      <input class="bal-input-inline" id="editSoldeInline" type="number" step="0.01" style="display:none">
-      <button class="btn-edit-bal" id="btnSaveBal" onclick="saveBal()" style="display:none;color:var(--green);font-size:1.1rem;">✔</button>
-      <button class="btn-edit-bal" id="btnCancelBal" onclick="cancelBal()" style="display:none;color:var(--red);font-size:1.1rem;">✕</button>
-    </div>
+<div class="top-card">
+  <h2>Solde de départ commun</h2>
+  <div class="solde-row">
+    <span class="solde-val" id="soldeDisplay">0,00 €</span>
+    <button class="btn-pencil" id="btnPencil" onclick="startEdit()">✎</button>
+    <input class="bal-input" id="soldeInput" type="number" step="0.01" style="display:none">
+    <button class="btn-ok" id="btnOk" onclick="saveEdit()" style="display:none">✔ OK</button>
+    <button class="btn-pencil" id="btnAnnul" onclick="cancelEdit()" style="display:none;color:var(--red)">✕</button>
   </div>
-  <div class="solde-recap">
-    <div class="recap-item"><label>Total débits</label><span class="neg" id="totalDebits">0,00 €</span></div>
-    <div class="recap-item"><label>Total crédits</label><span class="pos" id="totalCredits">0,00 €</span></div>
-    <div class="recap-item"><label>Encours</label><span id="totalEncours">0,00 €</span></div>
+  <div class="summary-grid">
+    <div class="sum-cell"><label>Total débits</label><span class="neg" id="totDeb">0,00 €</span></div>
+    <div class="sum-cell"><label>Total crédits</label><span class="pos" id="totCred">0,00 €</span></div>
+    <div class="sum-cell"><label>Encours</label><span id="totEnc">0,00 €</span></div>
   </div>
 </div>
 
 <!-- Noms -->
-<div class="settings-bar">
-  <div class="name-group">
-    <span class="dot dot-a"></span><label>Nom A :</label>
-    <input class="name-input" id="nameA" type="text" maxlength="20" placeholder="Personne A">
-  </div>
-  <div class="name-group">
-    <span class="dot dot-b"></span><label>Nom B :</label>
-    <input class="name-input" id="nameB" type="text" maxlength="20" placeholder="Personne B">
-  </div>
+<div class="names-bar">
+  <div class="name-grp"><span class="dot dot-a"></span><label>Nom A :</label><input class="name-input" id="nameA" type="text" maxlength="20" placeholder="Personne A"></div>
+  <div class="name-grp"><span class="dot dot-b"></span><label>Nom B :</label><input class="name-input" id="nameB" type="text" maxlength="20" placeholder="Personne B"></div>
 </div>
 
 <!-- Panels A + B -->
 <div class="cols">
+
+  <!-- A -->
   <div class="panel panel-a">
-    <div class="panel-header"><span class="dot dot-a"></span><span class="panel-title" id="titleA">Personne A</span></div>
-    <div class="stats-row">
-      <div class="stat-cell"><label>Débits</label><span class="neg" id="debA">0,00 €</span></div>
-      <div class="stat-cell"><label>Crédits</label><span class="pos" id="credA">0,00 €</span></div>
-      <div class="stat-cell"><label>Net perso</label><span id="netA">0,00 €</span></div>
+    <div class="panel-head"><span class="dot dot-a"></span><strong id="titleA">Personne A</strong></div>
+    <div class="mini-stats">
+      <div class="ms-cell"><label>Débits</label><span class="neg" id="debA">0,00 €</span></div>
+      <div class="ms-cell"><label>Crédits</label><span class="pos" id="credA">0,00 €</span></div>
+      <div class="ms-cell"><label>Net</label><span id="netA">0,00 €</span></div>
     </div>
-    <div class="add-form">
+    <div class="add-row">
       <input class="f-date" type="text" id="dateA" placeholder="jj/mm" maxlength="5">
       <input class="f-label" type="text" id="labelA" placeholder="Libellé…">
-      <input class="f-amt" type="number" id="amountA" placeholder="Montant" step="0.01" min="0">
-      <select id="typeA"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
-      <button class="btn-add" onclick="addMv('A')">+ Ajouter</button>
+      <input class="f-amt" type="number" id="amtA" placeholder="Montant" step="0.01" min="0">
+      <select class="f-type" id="typeA"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
+      <button class="btn-add btn-add-a" onclick="addMv('A')">+ Ajouter</button>
     </div>
-    <div class="mv-header">
-      <span class="h-date">Date</span><span class="h-label">Libellé</span>
-      <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
+    <div class="table-wrap">
+      <table id="tableA">
+        <thead><tr><th>N°</th><th>Date</th><th>Libellé</th><th class="r">Montant</th><th class="r">Encours</th><th class="r">Solde restant</th><th></th></tr></thead>
+        <tbody id="bodyA"><tr class="empty-row"><td colspan="7">Aucun mouvement</td></tr></tbody>
+      </table>
     </div>
-    <div class="movements" id="mvA"></div>
   </div>
 
+  <!-- B -->
   <div class="panel panel-b">
-    <div class="panel-header"><span class="dot dot-b"></span><span class="panel-title" id="titleB">Personne B</span></div>
-    <div class="stats-row">
-      <div class="stat-cell"><label>Débits</label><span class="neg" id="debB">0,00 €</span></div>
-      <div class="stat-cell"><label>Crédits</label><span class="pos" id="credB">0,00 €</span></div>
-      <div class="stat-cell"><label>Net perso</label><span id="netB">0,00 €</span></div>
+    <div class="panel-head"><span class="dot dot-b"></span><strong id="titleB">Personne B</strong></div>
+    <div class="mini-stats">
+      <div class="ms-cell"><label>Débits</label><span class="neg" id="debB">0,00 €</span></div>
+      <div class="ms-cell"><label>Crédits</label><span class="pos" id="credB">0,00 €</span></div>
+      <div class="ms-cell"><label>Net</label><span id="netB">0,00 €</span></div>
     </div>
-    <div class="add-form">
+    <div class="add-row">
       <input class="f-date" type="text" id="dateB" placeholder="jj/mm" maxlength="5">
       <input class="f-label" type="text" id="labelB" placeholder="Libellé…">
-      <input class="f-amt" type="number" id="amountB" placeholder="Montant" step="0.01" min="0">
-      <select id="typeB"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
-      <button class="btn-add" onclick="addMv('B')">+ Ajouter</button>
+      <input class="f-amt" type="number" id="amtB" placeholder="Montant" step="0.01" min="0">
+      <select class="f-type" id="typeB"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
+      <button class="btn-add btn-add-b" onclick="addMv('B')">+ Ajouter</button>
     </div>
-    <div class="mv-header">
-      <span class="h-date">Date</span><span class="h-label">Libellé</span>
-      <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
+    <div class="table-wrap">
+      <table id="tableB">
+        <thead><tr><th>N°</th><th>Date</th><th>Libellé</th><th class="r">Montant</th><th class="r">Encours</th><th class="r">Solde restant</th><th></th></tr></thead>
+        <tbody id="bodyB"><tr class="empty-row"><td colspan="7">Aucun mouvement</td></tr></tbody>
+      </table>
     </div>
-    <div class="movements" id="mvB"></div>
   </div>
 </div>
 
-<!-- Panel Total -->
-<div class="panel panel-total" style="margin-bottom:14px;">
-  <div class="panel-header">
-    <span class="dot" style="background:var(--accent-total)"></span>
-    <span class="panel-title">Vue d'ensemble — tous les mouvements</span>
+<!-- Vue d'ensemble -->
+<div class="panel panel-total" style="margin-bottom:12px;">
+  <div class="panel-head"><span class="dot" style="background:var(--green)"></span><strong>Vue d'ensemble — tous les mouvements</strong></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>N°</th><th>Date</th><th>Qui</th><th>Libellé</th><th class="r">Montant</th><th class="r">Encours</th><th class="r">Solde restant</th><th></th></tr></thead>
+      <tbody id="bodyTotal"><tr class="empty-row"><td colspan="8">Aucun mouvement</td></tr></tbody>
+    </table>
   </div>
-  <div class="mv-header">
-    <span style="width:6px;flex-shrink:0"></span>
-    <span class="h-date">Date</span><span class="h-label">Libellé</span>
-    <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
-  </div>
-  <div class="movements" id="mvTotal"></div>
 </div>
 
 <!-- Actions -->
-<div class="actions-section">
-  <h3>⚙ Gestion des données</h3>
-  <div class="action-row">
-    <button class="btn-action" onclick="openModal('movements')">🗑 Effacer tous les mouvements</button>
-    <button class="btn-action" onclick="openModal('solde')">✏ Modifier le solde de départ</button>
-    <button class="btn-action danger" onclick="openModal('all')">⚠ Tout effacer</button>
+<div class="actions">
+  <h3>⚙ Gestion</h3>
+  <div class="act-row">
+    <button class="btn-act" onclick="openModal('movements')">🗑 Effacer tous les mouvements</button>
+    <button class="btn-act" onclick="openModal('solde')">✏ Modifier le solde</button>
+    <button class="btn-act danger" onclick="openModal('all')">⚠ Tout effacer</button>
   </div>
-  <div class="action-row">
-    <button class="btn-action" onclick="openModal('movA')">Effacer mouvements · <span id="lbl-mvA">A</span></button>
-    <button class="btn-action" onclick="openModal('movB')">Effacer mouvements · <span id="lbl-mvB">B</span></button>
+  <div class="act-row">
+    <button class="btn-act" onclick="openModal('movA')">Effacer mouvements · <span id="lblA">A</span></button>
+    <button class="btn-act" onclick="openModal('movB')">Effacer mouvements · <span id="lblB">B</span></button>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal-overlay hidden" id="modalOverlay">
+<div class="overlay hidden" id="overlay">
   <div class="modal">
-    <h3 id="modalTitle"></h3>
-    <p id="modalDesc"></p>
-    <div class="modal-btns" id="modalBtns"></div>
+    <h3 id="mTitle"></h3><p id="mDesc"></p>
+    <div class="modal-btns" id="mBtns"></div>
   </div>
 </div>
 
 <script>
-// ── État en mémoire (pas de localStorage) ──
-let state = { names: { A: 'Personne A', B: 'Personne B' }, solde: 0, movements: { A: [], B: [] } };
+const LS = 'compte_joint_v4';
+let state = { names:{A:'Personne A',B:'Personne B'}, solde:0, movements:{A:[],B:[]} };
 
-// Tentative localStorage (fonctionne hors Claude.ai)
-const LS = 'compte_joint_v3';
+// Chargement localStorage
 try {
   const r = localStorage.getItem(LS);
-  if (r) {
-    const p = JSON.parse(r);
-    if (p && p.movements) {
-      state = p;
-    }
-  }
+  if (r) { const p = JSON.parse(r); if (p && p.movements) state = p; }
 } catch(e) {}
 
-function save() {
-  try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {}
-}
+function save() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {} }
 
+const fmt = n => n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
+const fmtS = n => (n < 0 ? '−' : '') + Math.abs(n).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
 
+function setEl(id, txt) { const e=document.getElementById(id); if(e) e.textContent=txt; }
+function setCls(id, val) { const e=document.getElementById(id); if(!e) return; e.className = val<0?'neg':val>0?'pos':'ora'; }
 
-// ── Utilitaires ──
-const fmt = n => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-
-function setEl(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
-function setClass(id, val) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.className = val < 0 ? 'neg' : val > 0 ? 'pos' : 'ora';
-}
-
-// ── Render ──
 function render() {
   // Noms
-  const inp = document.getElementById('nameA');
-  if (inp) inp.value = state.names.A;
-  const inp2 = document.getElementById('nameB');
-  if (inp2) inp2.value = state.names.B;
-  ['A','B'].forEach(k => {
-    setEl('title'+k, state.names[k]);
-    setEl('lbl-mv'+k, state.names[k]);
-  });
+  const nA=document.getElementById('nameA'); if(nA) nA.value=state.names.A;
+  const nB=document.getElementById('nameB'); if(nB) nB.value=state.names.B;
+  ['A','B'].forEach(k=>{ setEl('title'+k,state.names[k]); setEl('lbl'+k,state.names[k]); });
 
-  // Calculs A
+  // Stats A
   const debA  = state.movements.A.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
   const credA = state.movements.A.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
-  setEl('debA', fmt(debA));
-  setEl('credA', fmt(credA));
-  setEl('netA', fmt(credA - debA));
-  setClass('netA', credA - debA);
+  setEl('debA', fmt(debA)); setEl('credA', fmt(credA));
+  setEl('netA', fmtS(credA-debA)); setCls('netA', credA-debA);
 
-  // Calculs B
+  // Stats B
   const debB  = state.movements.B.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
   const credB = state.movements.B.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
-  setEl('debB', fmt(debB));
-  setEl('credB', fmt(credB));
-  setEl('netB', fmt(credB - debB));
-  setClass('netB', credB - debB);
+  setEl('debB', fmt(debB)); setEl('credB', fmt(credB));
+  setEl('netB', fmtS(credB-debB)); setCls('netB', credB-debB);
 
   // Solde commun
-  const totalDeb  = debA + debB;
-  const totalCred = credA + credB;
-  const encours   = state.solde - totalDeb + totalCred;
-  setEl('initBalDisplay', fmt(state.solde));
-  setEl('totalDebits',  fmt(totalDeb));
-  setEl('totalCredits', fmt(totalCred));
-  setEl('totalEncours', fmt(encours));
-  setClass('totalEncours', encours);
+  const totDeb = debA+debB, totCred = credA+credB;
+  const encours = state.solde - totDeb + totCred;
+  setEl('soldeDisplay', fmtS(state.solde));
+  setEl('totDeb', fmt(totDeb)); setEl('totCred', fmt(totCred));
+  setEl('totEnc', fmtS(encours)); setCls('totEnc', encours);
 
-  // Listes
-  renderList('mvA', state.movements.A, false, 'A');
-  renderList('mvB', state.movements.B, false, 'B');
+  // Tables
+  renderTable('bodyA', state.movements.A, false, 'A', 7);
+  renderTable('bodyB', state.movements.B, false, 'B', 7);
   const combined = [
-    ...state.movements.A.map(m=>({...m, owner:'A'})),
-    ...state.movements.B.map(m=>({...m, owner:'B'}))
-  ].sort((a,b)=>b.id-a.id);
-  renderList('mvTotal', combined, true, null);
+    ...state.movements.A.map(m=>({...m,owner:'A'})),
+    ...state.movements.B.map(m=>({...m,owner:'B'}))
+  ].sort((a,b)=>a.id-b.id);
+  renderTable('bodyTotal', combined, true, null, 8);
 }
 
-function renderList(cid, items, showOwner, who) {
-  const el = document.getElementById(cid);
-  if (!el) return;
-  if (!items.length) { el.innerHTML = '<div class="empty-mv">Aucun mouvement</div>'; return; }
-
-  // Solde courant après chaque opération (du plus ancien au plus récent)
-  const ordered = [...items].reverse();
+function renderTable(bodyId, items, showOwner, who, cols) {
+  const tbody = document.getElementById(bodyId);
+  if (!tbody) return;
+  if (!items.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="${cols}">Aucun mouvement</td></tr>`;
+    return;
+  }
+  // Calcul encours courant du plus ancien au plus récent
   let running = state.solde;
+  let html = '';
+  // items déjà triés du plus récent au plus ancien (unshift), on les inverse pour calcul
+  const ordered = [...items].sort((a,b)=>a.id-b.id);
   const balMap = {};
   ordered.forEach(m => {
-    running += m.type === 'cred' ? m.amount : -m.amount;
+    running += m.type==='cred' ? m.amount : -m.amount;
     balMap[m.id] = running;
   });
-
-  el.innerHTML = items.map(m => {
+  // Affichage du plus récent au plus ancien (items déjà dans cet ordre)
+  items.slice().sort((a,b)=>a.id-b.id).forEach((m, i) => {
     const owner = showOwner ? m.owner : who;
-    const ownerDot = showOwner
-      ? `<span class="mv-owner-dot" style="background:var(--accent-${m.owner.toLowerCase()})"></span>` : '';
-    const sign = m.type === 'cred' ? '+' : '−';
     const bal = balMap[m.id];
-    const balCls = bal < 0 ? 'neg' : bal > 0 ? 'pos' : 'zero';
-    return `<div class="mv-item">
-      ${ownerDot}
-      <span class="mv-date">${m.date||'—'}</span>
-      <span class="mv-label">${m.label}</span>
-      <span class="mv-amount ${m.type}">${sign}${fmt(m.amount)}</span>
-      <span class="mv-running ${balCls}">${fmt(bal)}</span>
-      <button class="btn-del" onclick="delMv('${owner}',${m.id})">✕</button>
-    </div>`;
-  }).join('');
+    const montantStr = (m.type==='cred'?'+':'−') + fmt(m.amount);
+    const montantCls = m.type==='cred'?'cred':'dep';
+    const balCls = bal<0?'rest-neg':'rest-pos';
+    // encours cumulé = somme de tous les débits jusqu'à ce mouvement
+    const ownerTd = showOwner
+      ? `<td class="owner-${m.owner.toLowerCase()}">${state.names[m.owner]}</td>` : '';
+    html += `<tr>
+      <td class="num">${i+1}</td>
+      <td>${m.date||'—'}</td>
+      ${ownerTd}
+      <td>${m.label}</td>
+      <td class="r ${montantCls}">${montantStr}</td>
+      <td class="r enc">${fmtS(state.solde - running + bal)}</td>
+      <td class="r ${balCls}">${fmtS(bal)}</td>
+      <td><button class="btn-del-row" onclick="delMv('${owner}',${m.id})">✕</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
 }
 
-// ── Ajouter mouvement ──
+// Attendre — l'encours par ligne doit être le cumul des débits jusqu'à cette ligne
+// On recalcule proprement :
+function renderTableFixed(bodyId, items, showOwner, who, cols) {
+  const tbody = document.getElementById(bodyId);
+  if (!tbody) return;
+  if (!items.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="${cols}">Aucun mouvement</td></tr>`;
+    return;
+  }
+  const ordered = [...items].sort((a,b)=>a.id-b.id);
+  let running = state.solde;
+  let html = '';
+  ordered.forEach((m, i) => {
+    running += m.type==='cred' ? m.amount : -m.amount;
+    const owner = showOwner ? m.owner : who;
+    const montantStr = (m.type==='cred'?'+':'−') + fmt(m.amount);
+    const montantCls = m.type==='cred'?'cred':'dep';
+    const balCls = running<0?'rest-neg':'rest-pos';
+    const ownerTd = showOwner
+      ? `<td class="owner-${m.owner.toLowerCase()}">${state.names[m.owner]}</td>` : '';
+    // encours cumulé = total débits - total crédits depuis le début jusqu'à cette ligne
+    const totalDebSoFar = ordered.slice(0,i+1).filter(x=>x.type==='dep').reduce((s,x)=>s+x.amount,0);
+    const totalCredSoFar = ordered.slice(0,i+1).filter(x=>x.type==='cred').reduce((s,x)=>s+x.amount,0);
+    html += `<tr>
+      <td class="num">${i+1}</td>
+      <td>${m.date||'—'}</td>
+      ${ownerTd}
+      <td>${m.label}</td>
+      <td class="r ${montantCls}">${montantStr}</td>
+      <td class="r enc">${fmtS(totalDebSoFar - totalCredSoFar)}</td>
+      <td class="r ${balCls}">${fmtS(running)}</td>
+      <td><button class="btn-del-row" onclick="delMv('${owner}',${m.id})">✕</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// Override render to use fixed version
+function render() {
+  const nA=document.getElementById('nameA'); if(nA) nA.value=state.names.A;
+  const nB=document.getElementById('nameB'); if(nB) nB.value=state.names.B;
+  ['A','B'].forEach(k=>{ setEl('title'+k,state.names[k]); setEl('lbl'+k,state.names[k]); });
+
+  const debA  = state.movements.A.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
+  const credA = state.movements.A.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
+  setEl('debA',fmt(debA)); setEl('credA',fmt(credA));
+  setEl('netA',fmtS(credA-debA)); setCls('netA',credA-debA);
+
+  const debB  = state.movements.B.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
+  const credB = state.movements.B.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
+  setEl('debB',fmt(debB)); setEl('credB',fmt(credB));
+  setEl('netB',fmtS(credB-debB)); setCls('netB',credB-debB);
+
+  const totDeb=debA+debB, totCred=credA+credB;
+  const encours=state.solde-totDeb+totCred;
+  setEl('soldeDisplay',fmtS(state.solde));
+  setEl('totDeb',fmt(totDeb)); setEl('totCred',fmt(totCred));
+  setEl('totEnc',fmtS(encours)); setCls('totEnc',encours);
+
+  renderTableFixed('bodyA', state.movements.A, false, 'A', 7);
+  renderTableFixed('bodyB', state.movements.B, false, 'B', 7);
+  const combined = [
+    ...state.movements.A.map(m=>({...m,owner:'A'})),
+    ...state.movements.B.map(m=>({...m,owner:'B'}))
+  ].sort((a,b)=>a.id-b.id);
+  renderTableFixed('bodyTotal', combined, true, null, 8);
+}
+
 function addMv(who) {
   const date   = document.getElementById('date'+who).value.trim();
   const label  = document.getElementById('label'+who).value.trim();
-  const amount = parseFloat(document.getElementById('amount'+who).value);
+  const amount = parseFloat(document.getElementById('amt'+who).value);
   const type   = document.getElementById('type'+who).value;
   if (!label) { alert('Le libellé est requis.'); return; }
-  if (isNaN(amount) || amount <= 0) { alert('Le montant doit être un nombre positif.'); return; }
-  state.movements[who].unshift({ id: Date.now(), date, label, amount, type });
+  if (isNaN(amount) || amount <= 0) { alert('Montant invalide.'); return; }
+  state.movements[who].push({ id: Date.now(), date, label, amount, type });
   save();
-  document.getElementById('date'+who).value = '';
-  document.getElementById('label'+who).value = '';
-  document.getElementById('amount'+who).value = '';
+  document.getElementById('date'+who).value='';
+  document.getElementById('label'+who).value='';
+  document.getElementById('amt'+who).value='';
   render();
 }
 
@@ -393,99 +416,66 @@ function delMv(who, id) {
   save(); render();
 }
 
-// ── Solde départ ──
-function startEditBal() {
-  document.getElementById('initBalDisplay').style.display = 'none';
-  document.getElementById('btnEditBal').style.display = 'none';
-  const inp = document.getElementById('editSoldeInline');
-  inp.value = state.solde;
-  inp.style.display = '';
-  document.getElementById('btnSaveBal').style.display = '';
-  document.getElementById('btnCancelBal').style.display = '';
+// Solde
+function startEdit() {
+  document.getElementById('soldeDisplay').style.display='none';
+  document.getElementById('btnPencil').style.display='none';
+  const inp=document.getElementById('soldeInput');
+  inp.value=state.solde; inp.style.display='';
+  document.getElementById('btnOk').style.display='';
+  document.getElementById('btnAnnul').style.display='';
   inp.focus(); inp.select();
-  inp.onkeydown = e => { if(e.key==='Enter'){ e.preventDefault(); saveBal(); } if(e.key==='Escape') cancelBal(); };
-  inp.onblur = e => { if(e.relatedTarget && (e.relatedTarget.id==='btnSaveBal'||e.relatedTarget.id==='btnCancelBal')) return; saveBal(); };
+  inp.onkeydown=e=>{ if(e.key==='Enter'){e.preventDefault();saveEdit();} if(e.key==='Escape') cancelEdit(); };
 }
-function saveBal() {
-  const inp = document.getElementById('editSoldeInline');
-  inp.onblur = null;
-  const v = parseFloat(inp.value);
-  if (!isNaN(v)) { state.solde = v; save(); }
-  cancelBal();
-  render();
+function saveEdit() {
+  const v=parseFloat(document.getElementById('soldeInput').value);
+  if(!isNaN(v)){state.solde=v;save();}
+  cancelEdit(); render();
 }
-function cancelBal() {
-  const inp = document.getElementById('editSoldeInline');
-  inp.onblur = null;
-  inp.style.display = 'none';
-  document.getElementById('btnSaveBal').style.display = 'none';
-  document.getElementById('btnCancelBal').style.display = 'none';
-  document.getElementById('initBalDisplay').style.display = '';
-  document.getElementById('btnEditBal').style.display = '';
+function cancelEdit() {
+  document.getElementById('soldeInput').style.display='none';
+  document.getElementById('btnOk').style.display='none';
+  document.getElementById('btnAnnul').style.display='none';
+  document.getElementById('soldeDisplay').style.display='';
+  document.getElementById('btnPencil').style.display='';
 }
 
-// ── Noms ──
-['A','B'].forEach(k => {
-  document.getElementById('name'+k).addEventListener('input', function() {
-    state.names[k] = this.value || k; save(); render();
+// Noms
+['A','B'].forEach(k=>{
+  document.getElementById('name'+k).addEventListener('input',function(){
+    state.names[k]=this.value||k; save(); render();
   });
 });
 
-// ── Modal ──
+// Modal
 const modalCfg = {
-  movements: {
-    title:'🗑 Effacer tous les mouvements',
-    desc:'Les mouvements de A et B seront supprimés. Le solde de départ est conservé.',
-    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovements'}]
-  },
-  solde: {
-    title:'✏ Modifier le solde de départ',
-    desc:'Nouveau solde de départ commun (€) :',
-    btns:[{l:'Annuler',c:'',a:'close'},{l:'Enregistrer',c:'confirm-ok',a:'doSolde'}], input:true
-  },
-  all: {
-    title:'⚠ Tout effacer',
-    desc:'Mouvements ET solde seront supprimés. Action irréversible.',
-    btns:[{l:'Annuler',c:'',a:'close'},{l:'Tout effacer',c:'confirm-danger',a:'doAll'}]
-  },
-  movA: {
-    title:()=>`Effacer mouvements · ${state.names.A}`,
-    desc:()=>`Tous les mouvements de ${state.names.A} seront supprimés.`,
-    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovA'}]
-  },
-  movB: {
-    title:()=>`Effacer mouvements · ${state.names.B}`,
-    desc:()=>`Tous les mouvements de ${state.names.B} seront supprimés.`,
-    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovB'}]
-  }
+  movements:{ title:'🗑 Effacer tous les mouvements', desc:'Mouvements A et B supprimés. Solde conservé.', btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'danger',a:'doMov'}] },
+  solde:{ title:'✏ Modifier le solde', desc:'Nouveau solde de départ :', btns:[{l:'Annuler',c:'',a:'close'},{l:'Enregistrer',c:'ok',a:'doSolde'}], input:true },
+  all:{ title:'⚠ Tout effacer', desc:'Mouvements ET solde supprimés. Irréversible.', btns:[{l:'Annuler',c:'',a:'close'},{l:'Tout effacer',c:'danger',a:'doAll'}] },
+  movA:{ title:()=>`Effacer mouvements · ${state.names.A}`, desc:()=>`Mouvements de ${state.names.A} supprimés.`, btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'danger',a:'doMovA'}] },
+  movB:{ title:()=>`Effacer mouvements · ${state.names.B}`, desc:()=>`Mouvements de ${state.names.B} supprimés.`, btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'danger',a:'doMovB'}] }
 };
 
 function openModal(type) {
-  const cfg = modalCfg[type];
-  document.getElementById('modalTitle').textContent = typeof cfg.title==='function' ? cfg.title() : cfg.title;
-  let desc = typeof cfg.desc==='function' ? cfg.desc() : cfg.desc;
-  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01">`;
-  document.getElementById('modalDesc').innerHTML = desc;
-  document.getElementById('modalBtns').innerHTML = cfg.btns.map(b=>
-    `<button class="btn-modal ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`).join('');
-  document.getElementById('modalOverlay').classList.remove('hidden');
-  const inp = document.getElementById('modalInput');
-  if (inp) { inp.focus(); inp.select(); }
+  const cfg=modalCfg[type];
+  document.getElementById('mTitle').textContent=typeof cfg.title==='function'?cfg.title():cfg.title;
+  let desc=typeof cfg.desc==='function'?cfg.desc():cfg.desc;
+  if(cfg.input) desc+=`<input id="mInput" class="modal-input" type="number" value="${state.solde}" step="0.01">`;
+  document.getElementById('mDesc').innerHTML=desc;
+  document.getElementById('mBtns').innerHTML=cfg.btns.map(b=>`<button class="btn-m ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`).join('');
+  document.getElementById('overlay').classList.remove('hidden');
+  const inp=document.getElementById('mInput'); if(inp){inp.focus();inp.select();}
 }
-
-function handleModal(action) {
-  switch(action) {
-    case 'doMovements': state.movements.A=[]; state.movements.B=[]; save(); break;
-    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.solde=v;save();} break; }
-    case 'doAll': state.movements.A=[]; state.movements.B=[]; state.solde=0; save(); break;
-    case 'doMovA': state.movements.A=[]; save(); break;
-    case 'doMovB': state.movements.B=[]; save(); break;
-  }
-  document.getElementById('modalOverlay').classList.add('hidden');
+function handleModal(a) {
+  if(a==='doMov'){state.movements.A=[];state.movements.B=[];save();}
+  else if(a==='doSolde'){const v=parseFloat(document.getElementById('mInput')?.value);if(!isNaN(v)){state.solde=v;save();}}
+  else if(a==='doAll'){state.movements.A=[];state.movements.B=[];state.solde=0;save();}
+  else if(a==='doMovA'){state.movements.A=[];save();}
+  else if(a==='doMovB'){state.movements.B=[];save();}
+  document.getElementById('overlay').classList.add('hidden');
   render();
 }
-
-document.getElementById('modalOverlay').addEventListener('click', e=>{ if(e.target===e.currentTarget) handleModal('close'); });
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)handleModal('close');});
 
 render();
 </script>
