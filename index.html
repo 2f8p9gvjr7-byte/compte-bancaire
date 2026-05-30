@@ -9,149 +9,87 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0d1b2e;
-    --surface: #162540;
-    --surface2: #1e3254;
-    --border: #2a4570;
-    --text: #e8eef5;
-    --muted: #7a96b8;
-    --orange: #f5a623;
-    --orange-dark: #d4891a;
-    --accent-a: #f5a623;
-    --accent-b: #4db8e8;
-    --accent-total: #5dd88a;
-    --red: #e05a5a;
-    --green: #5dd88a;
-    --radius: 14px;
-    --radius-sm: 8px;
+    --bg: #0d1b2e; --surface: #162540; --surface2: #1e3254; --border: #2a4570;
+    --text: #e8eef5; --muted: #7a96b8; --orange: #f5a623; --orange-dark: #d4891a;
+    --accent-a: #f5a623; --accent-b: #4db8e8; --accent-total: #5dd88a;
+    --red: #e05a5a; --green: #5dd88a; --radius: 14px; --radius-sm: 8px;
   }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 20px 14px 60px;
-    font-size: 14px;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 16px 12px 60px; font-size: 14px; }
 
-  /* Header */
-  header {
-    text-align: center;
-    margin-bottom: 22px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-  }
+  header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
   header h1 { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
   header p { color: var(--muted); font-size: 0.68rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
 
+  /* Bandeau sauvegarde */
+  .save-bar {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .save-bar span { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; flex: 1; }
+  .btn-save, .btn-load {
+    font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+    padding: 6px 12px; border-radius: 6px; cursor: pointer; border: none; transition: opacity .15s;
+  }
+  .btn-save { background: var(--orange); color: #0d1b2e; }
+  .btn-load { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+  .btn-save:hover, .btn-load:hover { opacity: 0.85; }
+
   /* Solde commun */
   .solde-commun {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--orange);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    margin-bottom: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 20px;
+    background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--orange);
+    border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
   }
-  .solde-commun h2 { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .solde-block { flex: 1; min-width: 130px; }
-  .solde-val { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
-  .solde-val.neg { color: var(--red); }
+  .solde-block { min-width: 160px; }
+  .solde-block h2 { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .solde-val { font-size: 1.5rem; font-weight: 700; color: var(--orange); }
   .solde-edit-wrap { display: flex; align-items: center; gap: 6px; }
   .btn-edit-bal { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 0.8rem; padding: 2px 5px; border-radius: 4px; transition: color .15s; }
   .btn-edit-bal:hover { color: var(--orange); }
-  .bal-input-inline {
-    background: var(--bg); border: 1px solid var(--orange);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 1rem; font-weight: 600;
-    padding: 5px 8px; border-radius: 6px; width: 110px; text-align: center;
-  }
+  .bal-input-inline { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; width: 120px; text-align: center; }
   .bal-input-inline:focus { outline: none; }
-  .solde-recap {
-    display: flex; gap: 24px; flex-wrap: wrap;
-  }
+  .solde-recap { display: flex; gap: 20px; flex-wrap: wrap; }
   .recap-item { text-align: center; }
-  .recap-item label { display: block; color: var(--muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .recap-item label { display: block; color: var(--muted); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
   .recap-item span { font-size: 1rem; font-weight: 700; }
-  .recap-item span.neg { color: var(--red); }
-  .recap-item span.pos { color: var(--green); }
-  .recap-item span.ora { color: var(--orange); }
+  .neg { color: var(--red); } .pos { color: var(--green); } .ora { color: var(--orange); }
 
-  /* Settings bar */
-  .settings-bar {
-    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 12px 16px; margin-bottom: 18px;
-  }
-  .name-group { display: flex; align-items: center; gap: 8px; }
-  .settings-bar label { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  .name-input {
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 0.85rem; font-weight: 500;
-    padding: 6px 10px; border-radius: var(--radius-sm); width: 100px; transition: border-color .2s;
-  }
+  /* Noms */
+  .settings-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 14px; }
+  .name-group { display: flex; align-items: center; gap: 7px; }
+  .settings-bar label { color: var(--muted); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .name-input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; padding: 6px 10px; border-radius: var(--radius-sm); width: 100px; transition: border-color .2s; }
   .name-input:focus { outline: none; border-color: var(--orange); }
   .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .dot-a { background: var(--accent-a); }
-  .dot-b { background: var(--accent-b); }
+  .dot-a { background: var(--accent-a); } .dot-b { background: var(--accent-b); }
 
   /* Grid */
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 18px; }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-bottom: 14px; }
 
   /* Panel */
-  .panel {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
-  }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
   .panel-a  { border-top: 3px solid var(--accent-a); }
   .panel-b  { border-top: 3px solid var(--accent-b); }
   .panel-total { border-top: 3px solid var(--accent-total); }
-
-  .panel-header {
-    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
-    border-bottom: 1px solid var(--border);
-  }
+  .panel-header { padding: 11px 14px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid var(--border); }
   .panel-title { font-size: 0.95rem; font-weight: 700; flex: 1; }
-  .panel-sub { font-size: 0.72rem; color: var(--muted); }
 
-  /* Stats row */
-  .stats-row {
-    display: flex; background: var(--border); gap: 1px; border-bottom: 1px solid var(--border);
-  }
-  .stat-cell { background: var(--surface2); flex: 1; padding: 10px 8px; text-align: center; }
-  .stat-cell label { display: block; color: var(--muted); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-  .stat-cell span { font-size: 0.92rem; font-weight: 700; }
-  .stat-cell span.neg { color: var(--red); }
-  .stat-cell span.pos { color: var(--green); }
-  .stat-cell span.ora { color: var(--orange); }
+  /* Stats */
+  .stats-row { display: flex; background: var(--border); gap: 1px; border-bottom: 1px solid var(--border); }
+  .stat-cell { background: var(--surface2); flex: 1; padding: 9px 6px; text-align: center; }
+  .stat-cell label { display: block; color: var(--muted); font-size: 0.57rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .stat-cell span { font-size: 0.88rem; font-weight: 700; }
 
   /* Add form */
-  .add-form {
-    padding: 10px 12px; display: flex; gap: 6px; flex-wrap: wrap;
-    border-bottom: 1px solid var(--border); background: var(--surface2);
-  }
-  .add-form input, .add-form select {
-    background: var(--bg); border: 1px solid var(--border);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 0.78rem; padding: 7px 8px; border-radius: var(--radius-sm); transition: border-color .2s;
-  }
+  .add-form { padding: 9px 10px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .add-form input, .add-form select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.76rem; padding: 7px 7px; border-radius: var(--radius-sm); transition: border-color .2s; }
   .add-form input:focus, .add-form select:focus { outline: none; border-color: var(--orange); }
-  .add-form input.f-date  { width: 80px; }
+  .add-form input.f-date  { width: 72px; }
   .add-form input.f-label { flex: 1; min-width: 80px; }
-  .add-form input.f-amt   { width: 80px; }
-  .add-form select        { width: 90px; }
+  .add-form input.f-amt   { width: 78px; }
+  .add-form select        { width: 92px; }
   .add-form select option { background: var(--surface2); }
-  .btn-add {
-    background: var(--orange); color: #0d1b2e;
-    border: none; font-family: 'Inter', sans-serif;
-    font-size: 0.78rem; font-weight: 700;
-    padding: 7px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: background .15s; white-space: nowrap;
-  }
+  .btn-add { background: var(--orange); color: #0d1b2e; border: none; font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 7px 11px; border-radius: var(--radius-sm); cursor: pointer; transition: background .15s; white-space: nowrap; }
   .btn-add:hover { background: var(--orange-dark); }
   .panel-b .btn-add { background: var(--accent-b); }
   .panel-b .btn-add:hover { background: #35a0cc; }
@@ -160,44 +98,36 @@
   .movements { flex: 1; overflow-y: auto; max-height: 260px; }
   .movements::-webkit-scrollbar { width: 4px; }
   .movements::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-  .mv-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 12px; border-bottom: 1px solid var(--border);
-    font-size: 0.74rem; transition: background .1s;
-  }
-  .mv-item:hover { background: var(--surface2); }
-  .mv-date { color: var(--muted); width: 44px; flex-shrink: 0; font-size: 0.68rem; }
-  .mv-label { flex: 1; }
-  .mv-badge {
-    font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 2px 5px; border-radius: 4px; background: var(--surface2);
-    color: var(--muted); flex-shrink: 0; border: 1px solid var(--border);
-  }
-  .mv-amount { font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
-  .mv-amount.dep  { color: var(--red); }
-  .mv-amount.cred { color: var(--green); }
-  .mv-running { font-size: 0.75rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; min-width: 60px; text-align: right; }
-  .mv-running.pos { color: var(--green); }
-  .mv-running.neg { color: var(--red); }
-  .btn-del { background: none; border: none; cursor: pointer; color: var(--border); font-size: 0.8rem; padding: 2px 4px; border-radius: 4px; transition: color .15s; flex-shrink: 0; }
-  .btn-del:hover { color: var(--red); }
-  .empty-mv { padding: 20px; text-align: center; color: var(--muted); font-size: 0.72rem; font-style: italic; }
-  .mv-owner-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .panel-total .movements { max-height: 300px; }
 
+  /* Header de colonne */
+  .mv-header { display: flex; align-items: center; gap: 8px; padding: 5px 12px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .mv-header span { font-size: 0.58rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+  .mv-header .h-date  { width: 44px; flex-shrink: 0; }
+  .mv-header .h-label { flex: 1; }
+  .mv-header .h-amt   { width: 64px; text-align: right; }
+  .mv-header .h-bal   { width: 72px; text-align: right; }
+  .mv-header .h-del   { width: 20px; }
+
+  .mv-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.74rem; transition: background .1s; }
+  .mv-item:hover { background: var(--surface2); }
+  .mv-date  { color: var(--muted); width: 44px; flex-shrink: 0; font-size: 0.68rem; }
+  .mv-label { flex: 1; }
+  .mv-badge { font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 4px; border-radius: 4px; background: var(--surface2); color: var(--muted); flex-shrink: 0; border: 1px solid var(--border); }
+  .mv-amount { font-weight: 700; font-size: 0.78rem; white-space: nowrap; width: 64px; text-align: right; }
+  .mv-amount.dep { color: var(--red); } .mv-amount.cred { color: var(--green); }
+  .mv-running { font-size: 0.75rem; font-weight: 700; white-space: nowrap; width: 72px; text-align: right; flex-shrink: 0; }
+  .mv-running.pos { color: var(--green); } .mv-running.neg { color: var(--red); } .mv-running.zero { color: var(--orange); }
+  .mv-owner-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--border); font-size: 0.8rem; padding: 2px 3px; border-radius: 3px; transition: color .15s; flex-shrink: 0; width: 20px; }
+  .btn-del:hover { color: var(--red); }
+  .empty-mv { padding: 20px; text-align: center; color: var(--muted); font-size: 0.72rem; font-style: italic; }
+
   /* Actions */
-  .actions-section {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px 18px;
-  }
-  .actions-section h3 { font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .actions-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .actions-section h3 { font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
   .action-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
-  .btn-action {
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 0.72rem; font-weight: 500;
-    padding: 7px 13px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s;
-  }
+  .btn-action { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; padding: 7px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s; }
   .btn-action:hover { border-color: var(--orange); color: var(--orange); }
   .btn-action.danger { border-color: rgba(224,90,90,.4); }
   .btn-action.danger:hover { background: rgba(224,90,90,.12); border-color: var(--red); color: var(--red); }
@@ -205,9 +135,9 @@
   /* Modal */
   .modal-overlay { position: fixed; inset: 0; background: rgba(5,12,25,.82); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(6px); }
   .modal-overlay.hidden { display: none; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 340px; width: 92%; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; max-width: 340px; width: 92%; }
   .modal h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--orange); }
-  .modal p { color: var(--muted); font-size: 0.78rem; margin-bottom: 16px; line-height: 1.6; }
+  .modal p { color: var(--muted); font-size: 0.78rem; margin-bottom: 14px; line-height: 1.6; }
   .modal-btns { display: flex; gap: 8px; }
   .btn-modal { flex: 1; padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 500; cursor: pointer; transition: all .15s; }
   .btn-modal:hover { border-color: var(--muted); }
@@ -215,7 +145,7 @@
   .btn-modal.confirm-danger:hover { background: rgba(224,90,90,.25); }
   .btn-modal.confirm-ok { background: rgba(245,166,35,.15); border-color: var(--orange); color: var(--orange); }
   .btn-modal.confirm-ok:hover { background: rgba(245,166,35,.25); }
-  .modal-input { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; padding: 7px 10px; border-radius: var(--radius-sm); width: 140px; text-align: center; display: block; margin: 10px auto 0; }
+  .modal-input { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; padding: 7px 10px; border-radius: var(--radius-sm); width: 140px; text-align: center; display: block; margin: 10px auto 0; }
   .modal-input:focus { outline: none; }
 </style>
 </head>
@@ -226,104 +156,100 @@
   <p>Suivi mensuel · Données locales</p>
 </header>
 
+<!-- Bandeau sauvegarde -->
+<div class="save-bar">
+  <span>💾 Sauvegardez vos données avant de fermer</span>
+  <button class="btn-load" onclick="importData()">📂 Charger</button>
+  <button class="btn-save" onclick="exportData()">⬇ Sauvegarder</button>
+</div>
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
+
 <!-- Solde commun -->
 <div class="solde-commun">
   <div class="solde-block">
     <h2>Solde de départ commun</h2>
     <div class="solde-edit-wrap">
-      <span class="solde-val" id="initBalDisplay">0,00 €</span>
+      <span class="solde-val ora" id="initBalDisplay">0,00 €</span>
       <button class="btn-edit-bal" id="btnEditBal" onclick="startEditBal()" title="Modifier">✎</button>
-      <input class="bal-input-inline" id="editSoldeInline" type="number" step="0.01" style="display:none;">
+      <input class="bal-input-inline" id="editSoldeInline" type="number" step="0.01" style="display:none">
       <button class="btn-edit-bal" id="btnSaveBal" onclick="saveBal()" style="display:none;color:var(--green);font-size:1.1rem;">✔</button>
       <button class="btn-edit-bal" id="btnCancelBal" onclick="cancelBal()" style="display:none;color:var(--red);font-size:1.1rem;">✕</button>
     </div>
   </div>
   <div class="solde-recap">
-    <div class="recap-item">
-      <label>Total débits</label>
-      <span class="neg" id="totalDebits">0,00 €</span>
-    </div>
-    <div class="recap-item">
-      <label>Total crédits</label>
-      <span class="pos" id="totalCredits">0,00 €</span>
-    </div>
-    <div class="recap-item">
-      <label>Encours</label>
-      <span class="ora" id="totalEncours">0,00 €</span>
-    </div>
+    <div class="recap-item"><label>Total débits</label><span class="neg" id="totalDebits">0,00 €</span></div>
+    <div class="recap-item"><label>Total crédits</label><span class="pos" id="totalCredits">0,00 €</span></div>
+    <div class="recap-item"><label>Encours</label><span id="totalEncours">0,00 €</span></div>
   </div>
 </div>
 
 <!-- Noms -->
 <div class="settings-bar">
   <div class="name-group">
-    <span class="dot dot-a"></span>
-    <label>Nom A :</label>
+    <span class="dot dot-a"></span><label>Nom A :</label>
     <input class="name-input" id="nameA" type="text" maxlength="20" placeholder="Personne A">
   </div>
   <div class="name-group">
-    <span class="dot dot-b"></span>
-    <label>Nom B :</label>
+    <span class="dot dot-b"></span><label>Nom B :</label>
     <input class="name-input" id="nameB" type="text" maxlength="20" placeholder="Personne B">
   </div>
 </div>
 
 <!-- Panels A + B -->
 <div class="cols">
-  <!-- A -->
   <div class="panel panel-a">
-    <div class="panel-header">
-      <span class="dot dot-a"></span>
-      <span class="panel-title" id="titleA">Personne A</span>
-    </div>
+    <div class="panel-header"><span class="dot dot-a"></span><span class="panel-title" id="titleA">Personne A</span></div>
     <div class="stats-row">
       <div class="stat-cell"><label>Débits</label><span class="neg" id="debA">0,00 €</span></div>
       <div class="stat-cell"><label>Crédits</label><span class="pos" id="credA">0,00 €</span></div>
-      <div class="stat-cell"><label>Solde perso</label><span class="ora" id="netA">0,00 €</span></div>
+      <div class="stat-cell"><label>Net perso</label><span id="netA">0,00 €</span></div>
     </div>
     <div class="add-form">
-      <input class="f-date"  type="text" id="dateA"   placeholder="jj/mm" maxlength="5">
-      <input class="f-label" type="text" id="labelA"  placeholder="Libellé…">
-      <input class="f-amt"   type="number" id="amountA" placeholder="Montant" step="0.01" min="0">
-      <select id="typeA">
-        <option value="dep">↓ Débit</option>
-        <option value="cred">↑ Crédit</option>
-      </select>
+      <input class="f-date" type="text" id="dateA" placeholder="jj/mm" maxlength="5">
+      <input class="f-label" type="text" id="labelA" placeholder="Libellé…">
+      <input class="f-amt" type="number" id="amountA" placeholder="Montant" step="0.01" min="0">
+      <select id="typeA"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
       <button class="btn-add" onclick="addMv('A')">+ Ajouter</button>
+    </div>
+    <div class="mv-header">
+      <span class="h-date">Date</span><span class="h-label">Libellé</span>
+      <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
     </div>
     <div class="movements" id="mvA"></div>
   </div>
 
-  <!-- B -->
   <div class="panel panel-b">
-    <div class="panel-header">
-      <span class="dot dot-b"></span>
-      <span class="panel-title" id="titleB">Personne B</span>
-    </div>
+    <div class="panel-header"><span class="dot dot-b"></span><span class="panel-title" id="titleB">Personne B</span></div>
     <div class="stats-row">
       <div class="stat-cell"><label>Débits</label><span class="neg" id="debB">0,00 €</span></div>
       <div class="stat-cell"><label>Crédits</label><span class="pos" id="credB">0,00 €</span></div>
-      <div class="stat-cell"><label>Solde perso</label><span class="ora" id="netB">0,00 €</span></div>
+      <div class="stat-cell"><label>Net perso</label><span id="netB">0,00 €</span></div>
     </div>
     <div class="add-form">
-      <input class="f-date"  type="text" id="dateB"   placeholder="jj/mm" maxlength="5">
-      <input class="f-label" type="text" id="labelB"  placeholder="Libellé…">
-      <input class="f-amt"   type="number" id="amountB" placeholder="Montant" step="0.01" min="0">
-      <select id="typeB">
-        <option value="dep">↓ Débit</option>
-        <option value="cred">↑ Crédit</option>
-      </select>
+      <input class="f-date" type="text" id="dateB" placeholder="jj/mm" maxlength="5">
+      <input class="f-label" type="text" id="labelB" placeholder="Libellé…">
+      <input class="f-amt" type="number" id="amountB" placeholder="Montant" step="0.01" min="0">
+      <select id="typeB"><option value="dep">↓ Débit</option><option value="cred">↑ Crédit</option></select>
       <button class="btn-add" onclick="addMv('B')">+ Ajouter</button>
+    </div>
+    <div class="mv-header">
+      <span class="h-date">Date</span><span class="h-label">Libellé</span>
+      <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
     </div>
     <div class="movements" id="mvB"></div>
   </div>
 </div>
 
 <!-- Panel Total -->
-<div class="panel panel-total" style="margin-bottom:18px;">
+<div class="panel panel-total" style="margin-bottom:14px;">
   <div class="panel-header">
     <span class="dot" style="background:var(--accent-total)"></span>
     <span class="panel-title">Vue d'ensemble — tous les mouvements</span>
+  </div>
+  <div class="mv-header">
+    <span style="width:6px;flex-shrink:0"></span>
+    <span class="h-date">Date</span><span class="h-label">Libellé</span>
+    <span class="h-amt">Montant</span><span class="h-bal">Solde</span><span class="h-del"></span>
   </div>
   <div class="movements" id="mvTotal"></div>
 </div>
@@ -352,57 +278,107 @@
 </div>
 
 <script>
-const LS = 'compte_joint_v1';
+// ── État en mémoire (pas de localStorage) ──
+let state = { names: { A: 'Personne A', B: 'Personne B' }, solde: 0, movements: { A: [], B: [] } };
 
-function loadState() {
-  try { const r = localStorage.getItem(LS); if (r) return JSON.parse(r); } catch(e) {}
-  return { names: { A: 'Personne A', B: 'Personne B' }, solde: 0, movements: { A: [], B: [] } };
+// Tentative localStorage (fonctionne hors Claude.ai)
+const LS = 'compte_joint_v3';
+try {
+  const r = localStorage.getItem(LS);
+  if (r) {
+    const p = JSON.parse(r);
+    if (p && p.movements) {
+      if (p.solde < 0) p.solde = Math.abs(p.solde);
+      state = p;
+    }
+  }
+} catch(e) {}
+
+function save() {
+  try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {}
 }
-function save() { localStorage.setItem(LS, JSON.stringify(state)); }
 
-let state = loadState();
+// ── Export / Import JSON ──
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'compte-partage-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+function importData() { document.getElementById('fileInput').click(); }
+function loadFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const p = JSON.parse(ev.target.result);
+      if (p && p.movements) {
+        if (p.solde < 0) p.solde = Math.abs(p.solde);
+        state = p;
+        save();
+        render();
+        alert('Données chargées avec succès !');
+      }
+    } catch(err) { alert('Fichier invalide.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
 
+// ── Utilitaires ──
 const fmt = n => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
+function setEl(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+function setClass(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = val < 0 ? 'neg' : val > 0 ? 'pos' : 'ora';
+}
+
+// ── Render ──
 function render() {
-  // noms
-  document.getElementById('nameA').value = state.names.A;
-  document.getElementById('nameB').value = state.names.B;
+  // Noms
+  const inp = document.getElementById('nameA');
+  if (inp) inp.value = state.names.A;
+  const inp2 = document.getElementById('nameB');
+  if (inp2) inp2.value = state.names.B;
   ['A','B'].forEach(k => {
-    document.getElementById('title'+k).textContent = state.names[k];
-    document.getElementById('lbl-mv'+k).textContent = state.names[k];
+    setEl('title'+k, state.names[k]);
+    setEl('lbl-mv'+k, state.names[k]);
   });
 
-  // calculs A
+  // Calculs A
   const debA  = state.movements.A.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
   const credA = state.movements.A.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
-  document.getElementById('debA').textContent  = fmt(debA);
-  document.getElementById('credA').textContent = fmt(credA);
-  document.getElementById('netA').textContent  = fmt(credA - debA);
-  setColor('netA', credA - debA);
+  setEl('debA', fmt(debA));
+  setEl('credA', fmt(credA));
+  setEl('netA', fmt(credA - debA));
+  setClass('netA', credA - debA);
 
-  // calculs B
+  // Calculs B
   const debB  = state.movements.B.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
   const credB = state.movements.B.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
-  document.getElementById('debB').textContent  = fmt(debB);
-  document.getElementById('credB').textContent = fmt(credB);
-  document.getElementById('netB').textContent  = fmt(credB - debB);
-  setColor('netB', credB - debB);
+  setEl('debB', fmt(debB));
+  setEl('credB', fmt(credB));
+  setEl('netB', fmt(credB - debB));
+  setClass('netB', credB - debB);
 
-  // solde commun
+  // Solde commun
   const totalDeb  = debA + debB;
   const totalCred = credA + credB;
   const encours   = state.solde - totalDeb + totalCred;
-  const initEl = document.getElementById('initBalDisplay');
-  if (initEl) initEl.textContent = fmt(state.solde);
-  const tdEl = document.getElementById('totalDebits');
-  if (tdEl) tdEl.textContent = fmt(totalDeb);
-  const tcEl = document.getElementById('totalCredits');
-  if (tcEl) tcEl.textContent = fmt(totalCred);
-  const teEl = document.getElementById('totalEncours');
-  if (teEl) { teEl.textContent = fmt(encours); setColor('totalEncours', encours); }
+  setEl('initBalDisplay', fmt(state.solde));
+  setEl('totalDebits',  fmt(totalDeb));
+  setEl('totalCredits', fmt(totalCred));
+  setEl('totalEncours', fmt(encours));
+  setClass('totalEncours', encours);
 
-  // listes
+  // Listes
   renderList('mvA', state.movements.A, false, 'A');
   renderList('mvB', state.movements.B, false, 'B');
   const combined = [
@@ -412,17 +388,12 @@ function render() {
   renderList('mvTotal', combined, true, null);
 }
 
-function setColor(id, val) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.className = val < 0 ? 'neg' : val > 0 ? 'pos' : 'ora';
-}
-
 function renderList(cid, items, showOwner, who) {
   const el = document.getElementById(cid);
+  if (!el) return;
   if (!items.length) { el.innerHTML = '<div class="empty-mv">Aucun mouvement</div>'; return; }
 
-  // Calcul du solde courant après chaque opération (du plus ancien au plus récent)
+  // Solde courant après chaque opération (du plus ancien au plus récent)
   const ordered = [...items].reverse();
   let running = state.solde;
   const balMap = {};
@@ -435,30 +406,28 @@ function renderList(cid, items, showOwner, who) {
     const owner = showOwner ? m.owner : who;
     const ownerDot = showOwner
       ? `<span class="mv-owner-dot" style="background:var(--accent-${m.owner.toLowerCase()})"></span>` : '';
-    const ownerLabel = showOwner
-      ? `<span class="mv-badge" style="border-color:var(--accent-${m.owner.toLowerCase()});color:var(--accent-${m.owner.toLowerCase()})">${state.names[m.owner]}</span>` : '';
     const sign = m.type === 'cred' ? '+' : '−';
     const bal = balMap[m.id];
-    const balCls = bal < 0 ? 'neg' : 'pos';
+    const balCls = bal < 0 ? 'neg' : bal > 0 ? 'pos' : 'zero';
     return `<div class="mv-item">
       ${ownerDot}
       <span class="mv-date">${m.date||'—'}</span>
       <span class="mv-label">${m.label}</span>
-      ${ownerLabel}
-      <span class="mv-badge">${m.type==='dep'?'débit':'crédit'}</span>
       <span class="mv-amount ${m.type}">${sign}${fmt(m.amount)}</span>
       <span class="mv-running ${balCls}">${fmt(bal)}</span>
-      <button class="btn-del" onclick="delMv('${owner}',${m.id})" title="Supprimer">✕</button>
+      <button class="btn-del" onclick="delMv('${owner}',${m.id})">✕</button>
     </div>`;
   }).join('');
 }
 
+// ── Ajouter mouvement ──
 function addMv(who) {
   const date   = document.getElementById('date'+who).value.trim();
   const label  = document.getElementById('label'+who).value.trim();
   const amount = parseFloat(document.getElementById('amount'+who).value);
   const type   = document.getElementById('type'+who).value;
-  if (!label || isNaN(amount) || amount <= 0) { alert('Libellé et montant requis.'); return; }
+  if (!label) { alert('Le libellé est requis.'); return; }
+  if (isNaN(amount) || amount <= 0) { alert('Le montant doit être un nombre positif.'); return; }
   state.movements[who].unshift({ id: Date.now(), date, label, amount, type });
   save();
   document.getElementById('date'+who).value = '';
@@ -472,7 +441,7 @@ function delMv(who, id) {
   save(); render();
 }
 
-// Solde départ inline — show/hide sans détruire les éléments
+// ── Solde départ ──
 function startEditBal() {
   document.getElementById('initBalDisplay').style.display = 'none';
   document.getElementById('btnEditBal').style.display = 'none';
@@ -486,9 +455,8 @@ function startEditBal() {
 }
 function saveBal() {
   const v = parseFloat(document.getElementById('editSoldeInline').value);
-  if (!isNaN(v)) { state.solde = v; save(); }
-  cancelBal();
-  render();
+  if (!isNaN(v)) { state.solde = Math.abs(v); save(); }
+  cancelBal(); render();
 }
 function cancelBal() {
   document.getElementById('editSoldeInline').style.display = 'none';
@@ -498,40 +466,39 @@ function cancelBal() {
   document.getElementById('btnEditBal').style.display = '';
 }
 
-// Noms
+// ── Noms ──
 ['A','B'].forEach(k => {
   document.getElementById('name'+k).addEventListener('input', function() {
     state.names[k] = this.value || k; save(); render();
   });
 });
 
-// Modal
+// ── Modal ──
 const modalCfg = {
   movements: {
-    title: '🗑 Effacer tous les mouvements',
-    desc: 'Les mouvements de A et B seront supprimés. Le solde de départ est conservé.',
-    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovements'}]
+    title:'🗑 Effacer tous les mouvements',
+    desc:'Les mouvements de A et B seront supprimés. Le solde de départ est conservé.',
+    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovements'}]
   },
   solde: {
-    title: '✏ Modifier le solde de départ',
-    desc: 'Saisissez le nouveau solde de départ commun :',
-    btns: [{l:'Annuler',c:'',a:'close'},{l:'Enregistrer',c:'confirm-ok',a:'doSolde'}],
-    input: true
+    title:'✏ Modifier le solde de départ',
+    desc:'Nouveau solde de départ commun (€) :',
+    btns:[{l:'Annuler',c:'',a:'close'},{l:'Enregistrer',c:'confirm-ok',a:'doSolde'}], input:true
   },
   all: {
-    title: '⚠ Tout effacer',
-    desc: 'Mouvements ET solde de départ seront supprimés. Action irréversible.',
-    btns: [{l:'Annuler',c:'',a:'close'},{l:'Tout effacer',c:'confirm-danger',a:'doAll'}]
+    title:'⚠ Tout effacer',
+    desc:'Mouvements ET solde seront supprimés. Action irréversible.',
+    btns:[{l:'Annuler',c:'',a:'close'},{l:'Tout effacer',c:'confirm-danger',a:'doAll'}]
   },
   movA: {
-    title: () => `Effacer mouvements · ${state.names.A}`,
-    desc: () => `Tous les mouvements de ${state.names.A} seront supprimés.`,
-    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovA'}]
+    title:()=>`Effacer mouvements · ${state.names.A}`,
+    desc:()=>`Tous les mouvements de ${state.names.A} seront supprimés.`,
+    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovA'}]
   },
   movB: {
-    title: () => `Effacer mouvements · ${state.names.B}`,
-    desc: () => `Tous les mouvements de ${state.names.B} seront supprimés.`,
-    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovB'}]
+    title:()=>`Effacer mouvements · ${state.names.B}`,
+    desc:()=>`Tous les mouvements de ${state.names.B} seront supprimés.`,
+    btns:[{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovB'}]
   }
 };
 
@@ -539,9 +506,9 @@ function openModal(type) {
   const cfg = modalCfg[type];
   document.getElementById('modalTitle').textContent = typeof cfg.title==='function' ? cfg.title() : cfg.title;
   let desc = typeof cfg.desc==='function' ? cfg.desc() : cfg.desc;
-  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01">`;
+  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01" min="0">`;
   document.getElementById('modalDesc').innerHTML = desc;
-  document.getElementById('modalBtns').innerHTML = cfg.btns.map(b =>
+  document.getElementById('modalBtns').innerHTML = cfg.btns.map(b=>
     `<button class="btn-modal ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`).join('');
   document.getElementById('modalOverlay').classList.remove('hidden');
   const inp = document.getElementById('modalInput');
@@ -551,7 +518,7 @@ function openModal(type) {
 function handleModal(action) {
   switch(action) {
     case 'doMovements': state.movements.A=[]; state.movements.B=[]; save(); break;
-    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.solde=v;save();} break; }
+    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)&&v>=0){state.solde=v;save();} break; }
     case 'doAll': state.movements.A=[]; state.movements.B=[]; state.solde=0; save(); break;
     case 'doMovA': state.movements.A=[]; save(); break;
     case 'doMovB': state.movements.B=[]; save(); break;
@@ -560,7 +527,7 @@ function handleModal(action) {
   render();
 }
 
-document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) handleModal('close'); });
+document.getElementById('modalOverlay').addEventListener('click', e=>{ if(e.target===e.currentTarget) handleModal('close'); });
 
 render();
 </script>
