@@ -20,19 +20,6 @@
   header h1 { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
   header p { color: var(--muted); font-size: 0.68rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  /* Bandeau sauvegarde */
-  .save-bar {
-    background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .save-bar span { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; flex: 1; }
-  .btn-save, .btn-load {
-    font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
-    padding: 6px 12px; border-radius: 6px; cursor: pointer; border: none; transition: opacity .15s;
-  }
-  .btn-save { background: var(--orange); color: #0d1b2e; }
-  .btn-load { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
-  .btn-save:hover, .btn-load:hover { opacity: 0.85; }
 
   /* Solde commun */
   .solde-commun {
@@ -156,13 +143,6 @@
   <p>Suivi mensuel · Données locales</p>
 </header>
 
-<!-- Bandeau sauvegarde -->
-<div class="save-bar">
-  <span>💾 Sauvegardez vos données avant de fermer</span>
-  <button class="btn-load" onclick="importData()">📂 Charger</button>
-  <button class="btn-save" onclick="exportData()">⬇ Sauvegarder</button>
-</div>
-<input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
 
 <!-- Solde commun -->
 <div class="solde-commun">
@@ -288,7 +268,6 @@ try {
   if (r) {
     const p = JSON.parse(r);
     if (p && p.movements) {
-      if (p.solde < 0) p.solde = Math.abs(p.solde);
       state = p;
     }
   }
@@ -298,34 +277,7 @@ function save() {
   try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {}
 }
 
-// ── Export / Import JSON ──
-function exportData() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'compte-partage-' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
-}
-function importData() { document.getElementById('fileInput').click(); }
-function loadFile(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const p = JSON.parse(ev.target.result);
-      if (p && p.movements) {
-        if (p.solde < 0) p.solde = Math.abs(p.solde);
-        state = p;
-        save();
-        render();
-        alert('Données chargées avec succès !');
-      }
-    } catch(err) { alert('Fichier invalide.'); }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-}
+
 
 // ── Utilitaires ──
 const fmt = n => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -451,15 +403,21 @@ function startEditBal() {
   document.getElementById('btnSaveBal').style.display = '';
   document.getElementById('btnCancelBal').style.display = '';
   inp.focus(); inp.select();
-  inp.onkeydown = e => { if(e.key==='Enter') saveBal(); if(e.key==='Escape') cancelBal(); };
+  inp.onkeydown = e => { if(e.key==='Enter'){ e.preventDefault(); saveBal(); } if(e.key==='Escape') cancelBal(); };
+  inp.onblur = e => { if(e.relatedTarget && (e.relatedTarget.id==='btnSaveBal'||e.relatedTarget.id==='btnCancelBal')) return; saveBal(); };
 }
 function saveBal() {
-  const v = parseFloat(document.getElementById('editSoldeInline').value);
-  if (!isNaN(v)) { state.solde = Math.abs(v); save(); }
-  cancelBal(); render();
+  const inp = document.getElementById('editSoldeInline');
+  inp.onblur = null;
+  const v = parseFloat(inp.value);
+  if (!isNaN(v)) { state.solde = v; save(); }
+  cancelBal();
+  render();
 }
 function cancelBal() {
-  document.getElementById('editSoldeInline').style.display = 'none';
+  const inp = document.getElementById('editSoldeInline');
+  inp.onblur = null;
+  inp.style.display = 'none';
   document.getElementById('btnSaveBal').style.display = 'none';
   document.getElementById('btnCancelBal').style.display = 'none';
   document.getElementById('initBalDisplay').style.display = '';
@@ -506,7 +464,7 @@ function openModal(type) {
   const cfg = modalCfg[type];
   document.getElementById('modalTitle').textContent = typeof cfg.title==='function' ? cfg.title() : cfg.title;
   let desc = typeof cfg.desc==='function' ? cfg.desc() : cfg.desc;
-  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01" min="0">`;
+  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01">`;
   document.getElementById('modalDesc').innerHTML = desc;
   document.getElementById('modalBtns').innerHTML = cfg.btns.map(b=>
     `<button class="btn-modal ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`).join('');
@@ -518,7 +476,7 @@ function openModal(type) {
 function handleModal(action) {
   switch(action) {
     case 'doMovements': state.movements.A=[]; state.movements.B=[]; save(); break;
-    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)&&v>=0){state.solde=v;save();} break; }
+    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.solde=v;save();} break; }
     case 'doAll': state.movements.A=[]; state.movements.B=[]; state.solde=0; save(); break;
     case 'doMovA': state.movements.A=[]; save(); break;
     case 'doMovB': state.movements.B=[]; save(); break;
