@@ -230,9 +230,12 @@
 <div class="solde-commun">
   <div class="solde-block">
     <h2>Solde de départ commun</h2>
-    <div class="solde-edit-wrap" id="soldeDepart">
+    <div class="solde-edit-wrap">
       <span class="solde-val" id="initBalDisplay">0,00 €</span>
-      <button class="btn-edit-bal" onclick="startEditBal()" title="Modifier">✎</button>
+      <button class="btn-edit-bal" id="btnEditBal" onclick="startEditBal()" title="Modifier">✎</button>
+      <input class="bal-input-inline" id="editSoldeInline" type="number" step="0.01" style="display:none;">
+      <button class="btn-edit-bal" id="btnSaveBal" onclick="saveBal()" style="display:none;color:var(--green);font-size:1.1rem;">✔</button>
+      <button class="btn-edit-bal" id="btnCancelBal" onclick="cancelBal()" style="display:none;color:var(--red);font-size:1.1rem;">✕</button>
     </div>
   </div>
   <div class="solde-recap">
@@ -390,11 +393,14 @@ function render() {
   const totalDeb  = debA + debB;
   const totalCred = credA + credB;
   const encours   = state.solde - totalDeb + totalCred;
-  document.getElementById('initBalDisplay').textContent = fmt(state.solde);
-  document.getElementById('totalDebits').textContent    = fmt(totalDeb);
-  document.getElementById('totalCredits').textContent   = fmt(totalCred);
-  document.getElementById('totalEncours').textContent   = fmt(encours);
-  setColor('totalEncours', encours);
+  const initEl = document.getElementById('initBalDisplay');
+  if (initEl) initEl.textContent = fmt(state.solde);
+  const tdEl = document.getElementById('totalDebits');
+  if (tdEl) tdEl.textContent = fmt(totalDeb);
+  const tcEl = document.getElementById('totalCredits');
+  if (tcEl) tcEl.textContent = fmt(totalCred);
+  const teEl = document.getElementById('totalEncours');
+  if (teEl) { teEl.textContent = fmt(encours); setColor('totalEncours', encours); }
 
   // listes
   renderList('mvA', state.movements.A, false, 'A');
@@ -408,6 +414,7 @@ function render() {
 
 function setColor(id, val) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.className = val < 0 ? 'neg' : val > 0 ? 'pos' : 'ora';
 }
 
@@ -465,21 +472,30 @@ function delMv(who, id) {
   save(); render();
 }
 
-// Solde départ inline
+// Solde départ inline — show/hide sans détruire les éléments
 function startEditBal() {
-  const wrap = document.getElementById('soldeDepart');
-  wrap.innerHTML = `
-    <input class="bal-input-inline" id="editSolde" type="number" value="${state.solde}" step="0.01">
-    <button class="btn-edit-bal" onclick="saveBal()" style="color:var(--green);font-size:1.1rem;">✔</button>
-    <button class="btn-edit-bal" onclick="render()" style="color:var(--red);font-size:1.1rem;">✕</button>`;
-  const inp = document.getElementById('editSolde');
+  document.getElementById('initBalDisplay').style.display = 'none';
+  document.getElementById('btnEditBal').style.display = 'none';
+  const inp = document.getElementById('editSoldeInline');
+  inp.value = state.solde;
+  inp.style.display = '';
+  document.getElementById('btnSaveBal').style.display = '';
+  document.getElementById('btnCancelBal').style.display = '';
   inp.focus(); inp.select();
-  inp.addEventListener('keydown', e => { if(e.key==='Enter') saveBal(); if(e.key==='Escape') render(); });
+  inp.onkeydown = e => { if(e.key==='Enter') saveBal(); if(e.key==='Escape') cancelBal(); };
 }
 function saveBal() {
-  const v = parseFloat(document.getElementById('editSolde')?.value);
+  const v = parseFloat(document.getElementById('editSoldeInline').value);
   if (!isNaN(v)) { state.solde = v; save(); }
+  cancelBal();
   render();
+}
+function cancelBal() {
+  document.getElementById('editSoldeInline').style.display = 'none';
+  document.getElementById('btnSaveBal').style.display = 'none';
+  document.getElementById('btnCancelBal').style.display = 'none';
+  document.getElementById('initBalDisplay').style.display = '';
+  document.getElementById('btnEditBal').style.display = '';
 }
 
 // Noms
