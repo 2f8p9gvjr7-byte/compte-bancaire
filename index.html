@@ -176,6 +176,9 @@
   .mv-amount { font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
   .mv-amount.dep  { color: var(--red); }
   .mv-amount.cred { color: var(--green); }
+  .mv-running { font-size: 0.75rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; min-width: 60px; text-align: right; }
+  .mv-running.pos { color: var(--green); }
+  .mv-running.neg { color: var(--red); }
   .btn-del { background: none; border: none; cursor: pointer; color: var(--border); font-size: 0.8rem; padding: 2px 4px; border-radius: 4px; transition: color .15s; flex-shrink: 0; }
   .btn-del:hover { color: var(--red); }
   .empty-mv { padding: 20px; text-align: center; color: var(--muted); font-size: 0.72rem; font-style: italic; }
@@ -411,13 +414,25 @@ function setColor(id, val) {
 function renderList(cid, items, showOwner, who) {
   const el = document.getElementById(cid);
   if (!items.length) { el.innerHTML = '<div class="empty-mv">Aucun mouvement</div>'; return; }
+
+  // Calcul du solde courant après chaque opération (du plus ancien au plus récent)
+  const ordered = [...items].reverse();
+  let running = state.solde;
+  const balMap = {};
+  ordered.forEach(m => {
+    running += m.type === 'cred' ? m.amount : -m.amount;
+    balMap[m.id] = running;
+  });
+
   el.innerHTML = items.map(m => {
     const owner = showOwner ? m.owner : who;
     const ownerDot = showOwner
       ? `<span class="mv-owner-dot" style="background:var(--accent-${m.owner.toLowerCase()})"></span>` : '';
     const ownerLabel = showOwner
       ? `<span class="mv-badge" style="border-color:var(--accent-${m.owner.toLowerCase()});color:var(--accent-${m.owner.toLowerCase()})">${state.names[m.owner]}</span>` : '';
-    const sign = m.type==='cred' ? '+' : '−';
+    const sign = m.type === 'cred' ? '+' : '−';
+    const bal = balMap[m.id];
+    const balCls = bal < 0 ? 'neg' : 'pos';
     return `<div class="mv-item">
       ${ownerDot}
       <span class="mv-date">${m.date||'—'}</span>
@@ -425,6 +440,7 @@ function renderList(cid, items, showOwner, who) {
       ${ownerLabel}
       <span class="mv-badge">${m.type==='dep'?'débit':'crédit'}</span>
       <span class="mv-amount ${m.type}">${sign}${fmt(m.amount)}</span>
+      <span class="mv-running ${balCls}">${fmt(bal)}</span>
       <button class="btn-del" onclick="delMv('${owner}',${m.id})" title="Supprimer">✕</button>
     </div>`;
   }).join('');
