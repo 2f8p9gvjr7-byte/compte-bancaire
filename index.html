@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #0d1b2e;
     --surface: #162540;
@@ -26,7 +25,6 @@
     --radius: 14px;
     --radius-sm: 8px;
   }
-
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -36,303 +34,186 @@
     font-size: 14px;
   }
 
-  /* ── Header ── */
+  /* Header */
   header {
     text-align: center;
-    margin-bottom: 28px;
-    padding-bottom: 18px;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--border);
   }
-  header h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--orange);
-    letter-spacing: 0.5px;
-  }
-  header p {
-    color: var(--muted);
-    font-size: 0.72rem;
-    margin-top: 4px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
+  header h1 { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
+  header p { color: var(--muted); font-size: 0.68rem; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  /* ── Settings bar ── */
-  .settings-bar {
+  /* Solde commun */
+  .solde-commun {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 18px;
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
     align-items: center;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    margin-bottom: 22px;
+    gap: 20px;
   }
-  .settings-bar label { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .solde-commun h2 { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .solde-block { flex: 1; min-width: 130px; }
+  .solde-val { font-size: 1.4rem; font-weight: 700; color: var(--orange); }
+  .solde-val.neg { color: var(--red); }
+  .solde-edit-wrap { display: flex; align-items: center; gap: 6px; }
+  .btn-edit-bal { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 0.8rem; padding: 2px 5px; border-radius: 4px; transition: color .15s; }
+  .btn-edit-bal:hover { color: var(--orange); }
+  .bal-input-inline {
+    background: var(--bg); border: 1px solid var(--orange);
+    color: var(--text); font-family: 'Inter', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    padding: 5px 8px; border-radius: 6px; width: 110px; text-align: center;
+  }
+  .bal-input-inline:focus { outline: none; }
+  .solde-recap {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .recap-item { text-align: center; }
+  .recap-item label { display: block; color: var(--muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .recap-item span { font-size: 1rem; font-weight: 700; }
+  .recap-item span.neg { color: var(--red); }
+  .recap-item span.pos { color: var(--green); }
+  .recap-item span.ora { color: var(--orange); }
+
+  /* Settings bar */
+  .settings-bar {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 12px 16px; margin-bottom: 18px;
+  }
   .name-group { display: flex; align-items: center; gap: 8px; }
+  .settings-bar label { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; }
   .name-input {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 7px 10px;
-    border-radius: var(--radius-sm);
-    width: 90px;
-    transition: border-color .2s;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    padding: 6px 10px; border-radius: var(--radius-sm); width: 100px; transition: border-color .2s;
   }
   .name-input:focus { outline: none; border-color: var(--orange); }
-  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .dot-a { background: var(--accent-a); }
   .dot-b { background: var(--accent-b); }
-  .dot-total { background: var(--accent-total); }
 
-  /* ── Grid ── */
-  .cols {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 16px;
-    margin-bottom: 22px;
-  }
+  /* Grid */
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 18px; }
 
-  /* ── Panel ── */
+  /* Panel */
   .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
   }
-  .panel-header {
-    padding: 14px 18px 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .panel-title { font-size: 1rem; font-weight: 700; flex: 1; color: var(--text); }
   .panel-a  { border-top: 3px solid var(--accent-a); }
   .panel-b  { border-top: 3px solid var(--accent-b); }
   .panel-total { border-top: 3px solid var(--accent-total); }
 
-  /* ── Balances grid ── */
-  .balances {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    background: var(--border);
-    gap: 1px;
+  .panel-header {
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
     border-bottom: 1px solid var(--border);
   }
-  .bal-cell {
-    background: var(--surface2);
-    padding: 12px 10px;
-    text-align: center;
-  }
-  .bal-cell label {
-    display: block;
-    color: var(--muted);
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-  .bal-amount {
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  .bal-amount.positive { color: var(--green); }
-  .bal-amount.negative { color: var(--red); }
-  .bal-amount.neutral  { color: var(--orange); }
+  .panel-title { font-size: 0.95rem; font-weight: 700; flex: 1; }
+  .panel-sub { font-size: 0.72rem; color: var(--muted); }
 
-  /* ── Editable balance ── */
-  .bal-edit-wrap {
-    display: flex; align-items: center; justify-content: center; gap: 5px;
+  /* Stats row */
+  .stats-row {
+    display: flex; background: var(--border); gap: 1px; border-bottom: 1px solid var(--border);
   }
-  .btn-edit-bal {
-    background: none; border: none; cursor: pointer;
-    color: var(--muted); font-size: 0.75rem; padding: 2px 4px;
-    border-radius: 4px; transition: color .15s; line-height: 1;
-  }
-  .btn-edit-bal:hover { color: var(--orange); }
-  .bal-input-inline {
-    background: var(--bg);
-    border: 1px solid var(--orange);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 4px 6px;
-    border-radius: 6px;
-    width: 85px;
-    text-align: center;
-  }
-  .bal-input-inline:focus { outline: none; }
+  .stat-cell { background: var(--surface2); flex: 1; padding: 10px 8px; text-align: center; }
+  .stat-cell label { display: block; color: var(--muted); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .stat-cell span { font-size: 0.92rem; font-weight: 700; }
+  .stat-cell span.neg { color: var(--red); }
+  .stat-cell span.pos { color: var(--green); }
+  .stat-cell span.ora { color: var(--orange); }
 
-  /* ── Add form ── */
+  /* Add form */
   .add-form {
-    padding: 11px 14px;
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
+    padding: 10px 12px; display: flex; gap: 6px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); background: var(--surface2);
   }
   .add-form input, .add-form select {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    padding: 7px 10px;
-    border-radius: var(--radius-sm);
-    transition: border-color .2s;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; padding: 7px 8px; border-radius: var(--radius-sm); transition: border-color .2s;
   }
   .add-form input:focus, .add-form select:focus { outline: none; border-color: var(--orange); }
-  .add-form input[type="text"] { flex: 1; min-width: 90px; }
-  .add-form input[type="number"] { width: 85px; }
-  .add-form select { width: 100px; }
+  .add-form input.f-date  { width: 80px; }
+  .add-form input.f-label { flex: 1; min-width: 80px; }
+  .add-form input.f-amt   { width: 80px; }
+  .add-form select        { width: 90px; }
   .add-form select option { background: var(--surface2); }
-
   .btn-add {
-    background: var(--orange);
-    color: #0d1b2e;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 7px 13px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background .15s;
-    white-space: nowrap;
+    background: var(--orange); color: #0d1b2e;
+    border: none; font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    padding: 7px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: background .15s; white-space: nowrap;
   }
   .btn-add:hover { background: var(--orange-dark); }
-  .panel-b .btn-add { background: var(--accent-b); color: #0d1b2e; }
+  .panel-b .btn-add { background: var(--accent-b); }
   .panel-b .btn-add:hover { background: #35a0cc; }
 
-  /* ── Movements ── */
-  .movements {
-    flex: 1;
-    overflow-y: auto;
-    max-height: 260px;
-  }
+  /* Movements */
+  .movements { flex: 1; overflow-y: auto; max-height: 260px; }
   .movements::-webkit-scrollbar { width: 4px; }
-  .movements::-webkit-scrollbar-track { background: transparent; }
   .movements::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
   .mv-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.76rem;
-    transition: background .1s;
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-bottom: 1px solid var(--border);
+    font-size: 0.74rem; transition: background .1s;
   }
   .mv-item:hover { background: var(--surface2); }
-  .mv-date { color: var(--muted); width: 38px; flex-shrink: 0; font-size: 0.7rem; }
-  .mv-label { flex: 1; color: var(--text); }
-  .mv-type-badge {
-    font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 2px 5px; border-radius: 4px;
-    background: var(--surface2); color: var(--muted); flex-shrink: 0;
-    border: 1px solid var(--border);
+  .mv-date { color: var(--muted); width: 44px; flex-shrink: 0; font-size: 0.68rem; }
+  .mv-label { flex: 1; }
+  .mv-badge {
+    font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 5px; border-radius: 4px; background: var(--surface2);
+    color: var(--muted); flex-shrink: 0; border: 1px solid var(--border);
   }
-  .mv-amount { font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+  .mv-amount { font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
   .mv-amount.dep  { color: var(--red); }
   .mv-amount.cred { color: var(--green); }
-  .btn-del-mv {
-    background: none; border: none; cursor: pointer;
-    color: var(--border); font-size: 0.85rem; padding: 2px 4px;
-    border-radius: 4px; transition: color .15s; flex-shrink: 0;
-  }
-  .btn-del-mv:hover { color: var(--red); }
-  .empty-mv {
-    padding: 22px; text-align: center;
-    color: var(--muted); font-size: 0.74rem; font-style: italic;
-  }
-  .mv-owner-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--border); font-size: 0.8rem; padding: 2px 4px; border-radius: 4px; transition: color .15s; flex-shrink: 0; }
+  .btn-del:hover { color: var(--red); }
+  .empty-mv { padding: 20px; text-align: center; color: var(--muted); font-size: 0.72rem; font-style: italic; }
+  .mv-owner-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .panel-total .movements { max-height: 300px; }
 
-  /* ── Actions section ── */
+  /* Actions */
   .actions-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px;
   }
-  .actions-section h3 {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 14px;
-  }
-  .action-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-
+  .actions-section h3 { font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .action-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
   .btn-action {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.74rem;
-    font-weight: 500;
-    padding: 8px 14px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all .15s;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); font-family: 'Inter', sans-serif;
+    font-size: 0.72rem; font-weight: 500;
+    padding: 7px 13px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s;
   }
   .btn-action:hover { border-color: var(--orange); color: var(--orange); }
   .btn-action.danger { border-color: rgba(224,90,90,.4); }
   .btn-action.danger:hover { background: rgba(224,90,90,.12); border-color: var(--red); color: var(--red); }
 
-  /* ── Modal ── */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(5,12,25,.8);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 100; backdrop-filter: blur(6px);
-  }
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(5,12,25,.82); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(6px); }
   .modal-overlay.hidden { display: none; }
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px;
-    max-width: 360px; width: 92%;
-  }
-  .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; color: var(--orange); }
-  .modal p { color: var(--muted); font-size: 0.8rem; margin-bottom: 18px; line-height: 1.6; }
-  .modal-btns { display: flex; gap: 10px; }
-  .btn-modal {
-    flex: 1; padding: 9px 14px; border-radius: var(--radius-sm);
-    border: 1px solid var(--border); background: var(--surface2);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all .15s;
-  }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 340px; width: 92%; }
+  .modal h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--orange); }
+  .modal p { color: var(--muted); font-size: 0.78rem; margin-bottom: 16px; line-height: 1.6; }
+  .modal-btns { display: flex; gap: 8px; }
+  .btn-modal { flex: 1; padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 500; cursor: pointer; transition: all .15s; }
   .btn-modal:hover { border-color: var(--muted); }
   .btn-modal.confirm-danger { background: rgba(224,90,90,.15); border-color: var(--red); color: var(--red); }
   .btn-modal.confirm-danger:hover { background: rgba(224,90,90,.25); }
   .btn-modal.confirm-ok { background: rgba(245,166,35,.15); border-color: var(--orange); color: var(--orange); }
   .btn-modal.confirm-ok:hover { background: rgba(245,166,35,.25); }
-  .modal-input {
-    background: var(--bg); border: 1px solid var(--orange);
-    color: var(--text); font-family: 'Inter', sans-serif;
-    font-size: 1rem; font-weight: 600;
-    padding: 8px 12px; border-radius: var(--radius-sm);
-    width: 140px; text-align: center; display: block; margin: 12px auto 0;
-  }
+  .modal-input { background: var(--bg); border: 1px solid var(--orange); color: var(--text); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; padding: 7px 10px; border-radius: var(--radius-sm); width: 140px; text-align: center; display: block; margin: 10px auto 0; }
   .modal-input:focus { outline: none; }
-
-  @media (max-width: 600px) {
-    .balances { grid-template-columns: 1fr 1fr; }
-    .balances .bal-cell:last-child { grid-column: span 2; }
-  }
 </style>
 </head>
 <body>
@@ -342,6 +223,32 @@
   <p>Suivi mensuel · Données locales</p>
 </header>
 
+<!-- Solde commun -->
+<div class="solde-commun">
+  <div class="solde-block">
+    <h2>Solde de départ commun</h2>
+    <div class="solde-edit-wrap" id="soldeDepart">
+      <span class="solde-val" id="initBalDisplay">0,00 €</span>
+      <button class="btn-edit-bal" onclick="startEditBal()" title="Modifier">✎</button>
+    </div>
+  </div>
+  <div class="solde-recap">
+    <div class="recap-item">
+      <label>Total débits</label>
+      <span class="neg" id="totalDebits">0,00 €</span>
+    </div>
+    <div class="recap-item">
+      <label>Total crédits</label>
+      <span class="pos" id="totalCredits">0,00 €</span>
+    </div>
+    <div class="recap-item">
+      <label>Encours</label>
+      <span class="ora" id="totalEncours">0,00 €</span>
+    </div>
+  </div>
+</div>
+
+<!-- Noms -->
 <div class="settings-bar">
   <div class="name-group">
     <span class="dot dot-a"></span>
@@ -353,106 +260,66 @@
     <label>Nom B :</label>
     <input class="name-input" id="nameB" type="text" maxlength="20" placeholder="Personne B">
   </div>
-  <div class="name-group">
-    <span class="dot dot-total"></span>
-    <label>Total :</label>
-    <input class="name-input" id="nameTotal" type="text" maxlength="20" placeholder="Total">
-  </div>
 </div>
 
+<!-- Panels A + B -->
 <div class="cols">
-  <!-- Panel A -->
+  <!-- A -->
   <div class="panel panel-a">
     <div class="panel-header">
       <span class="dot dot-a"></span>
       <span class="panel-title" id="titleA">Personne A</span>
     </div>
-    <div class="balances">
-      <div class="bal-cell" id="cellInitA">
-        <label>Solde départ</label>
-        <div class="bal-edit-wrap">
-          <span class="bal-amount neutral" id="initBalA">0,00 €</span>
-          <button class="btn-edit-bal" onclick="startEditBal('A')" title="Modifier">✎</button>
-        </div>
-      </div>
-      <div class="bal-cell">
-        <label>Débits</label>
-        <span class="bal-amount negative" id="spendA">0,00 €</span>
-      </div>
-      <div class="bal-cell">
-        <label>Encours</label>
-        <span class="bal-amount neutral" id="finalBalA">0,00 €</span>
-      </div>
+    <div class="stats-row">
+      <div class="stat-cell"><label>Débits</label><span class="neg" id="debA">0,00 €</span></div>
+      <div class="stat-cell"><label>Crédits</label><span class="pos" id="credA">0,00 €</span></div>
+      <div class="stat-cell"><label>Solde perso</label><span class="ora" id="netA">0,00 €</span></div>
     </div>
     <div class="add-form">
-      <input type="text" id="labelA" placeholder="Libellé…">
-      <input type="number" id="amountA" placeholder="Montant" step="0.01" min="0">
+      <input class="f-date"  type="text" id="dateA"   placeholder="jj/mm" maxlength="5">
+      <input class="f-label" type="text" id="labelA"  placeholder="Libellé…">
+      <input class="f-amt"   type="number" id="amountA" placeholder="Montant" step="0.01" min="0">
       <select id="typeA">
         <option value="dep">↓ Débit</option>
         <option value="cred">↑ Crédit</option>
       </select>
-      <button class="btn-add" onclick="addMovement('A')">+ Ajouter</button>
+      <button class="btn-add" onclick="addMv('A')">+ Ajouter</button>
     </div>
     <div class="movements" id="mvA"></div>
   </div>
 
-  <!-- Panel B -->
+  <!-- B -->
   <div class="panel panel-b">
     <div class="panel-header">
       <span class="dot dot-b"></span>
       <span class="panel-title" id="titleB">Personne B</span>
     </div>
-    <div class="balances">
-      <div class="bal-cell" id="cellInitB">
-        <label>Solde départ</label>
-        <div class="bal-edit-wrap">
-          <span class="bal-amount neutral" id="initBalB">0,00 €</span>
-          <button class="btn-edit-bal" onclick="startEditBal('B')" title="Modifier">✎</button>
-        </div>
-      </div>
-      <div class="bal-cell">
-        <label>Débits</label>
-        <span class="bal-amount negative" id="spendB">0,00 €</span>
-      </div>
-      <div class="bal-cell">
-        <label>Encours</label>
-        <span class="bal-amount neutral" id="finalBalB">0,00 €</span>
-      </div>
+    <div class="stats-row">
+      <div class="stat-cell"><label>Débits</label><span class="neg" id="debB">0,00 €</span></div>
+      <div class="stat-cell"><label>Crédits</label><span class="pos" id="credB">0,00 €</span></div>
+      <div class="stat-cell"><label>Solde perso</label><span class="ora" id="netB">0,00 €</span></div>
     </div>
     <div class="add-form">
-      <input type="text" id="labelB" placeholder="Libellé…">
-      <input type="number" id="amountB" placeholder="Montant" step="0.01" min="0">
+      <input class="f-date"  type="text" id="dateB"   placeholder="jj/mm" maxlength="5">
+      <input class="f-label" type="text" id="labelB"  placeholder="Libellé…">
+      <input class="f-amt"   type="number" id="amountB" placeholder="Montant" step="0.01" min="0">
       <select id="typeB">
         <option value="dep">↓ Débit</option>
         <option value="cred">↑ Crédit</option>
       </select>
-      <button class="btn-add" onclick="addMovement('B')">+ Ajouter</button>
+      <button class="btn-add" onclick="addMv('B')">+ Ajouter</button>
     </div>
     <div class="movements" id="mvB"></div>
   </div>
+</div>
 
-  <!-- Panel Total -->
-  <div class="panel panel-total">
-    <div class="panel-header">
-      <span class="dot dot-total"></span>
-      <span class="panel-title" id="titleTotal">Total</span>
-    </div>
-    <div class="balances">
-      <div class="bal-cell">
-        <label>Solde départ</label>
-        <span class="bal-amount neutral" id="initBalTotal">0,00 €</span>
-      </div>
-      <div class="bal-cell">
-        <label>Débits</label>
-        <span class="bal-amount negative" id="spendTotal">0,00 €</span>
-      </div>
-      <div class="bal-cell">
-        <label>Encours</label>
-        <span class="bal-amount neutral" id="finalBalTotal">0,00 €</span>
-      </div>
-    </div>
-    <div class="movements" id="mvTotal"></div>
+<!-- Panel Total -->
+<div class="panel panel-total" style="margin-bottom:18px;">
+  <div class="panel-header">
+    <span class="dot" style="background:var(--accent-total)"></span>
+    <span class="panel-title">Vue d'ensemble — tous les mouvements</span>
   </div>
+  <div class="movements" id="mvTotal"></div>
 </div>
 
 <!-- Actions -->
@@ -460,220 +327,190 @@
   <h3>⚙ Gestion des données</h3>
   <div class="action-row">
     <button class="btn-action" onclick="openModal('movements')">🗑 Effacer tous les mouvements</button>
-    <button class="btn-action" onclick="openModal('balances')">↺ Réinitialiser les soldes</button>
+    <button class="btn-action" onclick="openModal('solde')">✏ Modifier le solde de départ</button>
     <button class="btn-action danger" onclick="openModal('all')">⚠ Tout effacer</button>
   </div>
   <div class="action-row">
     <button class="btn-action" onclick="openModal('movA')">Effacer mouvements · <span id="lbl-mvA">A</span></button>
     <button class="btn-action" onclick="openModal('movB')">Effacer mouvements · <span id="lbl-mvB">B</span></button>
-    <button class="btn-action" onclick="openModal('balA')">Solde départ · <span id="lbl-balA">A</span></button>
-    <button class="btn-action" onclick="openModal('balB')">Solde départ · <span id="lbl-balB">B</span></button>
   </div>
 </div>
 
 <!-- Modal -->
 <div class="modal-overlay hidden" id="modalOverlay">
   <div class="modal">
-    <h3 id="modalTitle">Confirmer</h3>
+    <h3 id="modalTitle"></h3>
     <p id="modalDesc"></p>
     <div class="modal-btns" id="modalBtns"></div>
   </div>
 </div>
 
 <script>
-const LS = 'compte_partage_v2';
+const LS = 'compte_joint_v1';
 
 function loadState() {
-  try {
-    const raw = localStorage.getItem(LS);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return { names: { A: 'Personne A', B: 'Personne B', Total: 'Total' }, balances: { A: 0, B: 0 }, movements: { A: [], B: [] } };
+  try { const r = localStorage.getItem(LS); if (r) return JSON.parse(r); } catch(e) {}
+  return { names: { A: 'Personne A', B: 'Personne B' }, solde: 0, movements: { A: [], B: [] } };
 }
-function saveState() { localStorage.setItem(LS, JSON.stringify(state)); }
+function save() { localStorage.setItem(LS, JSON.stringify(state)); }
 
 let state = loadState();
 
-function fmt(n) {
-  return n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-}
-function today() {
-  return new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
-}
+const fmt = n => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
 function render() {
-  // Names
+  // noms
   document.getElementById('nameA').value = state.names.A;
   document.getElementById('nameB').value = state.names.B;
-  document.getElementById('nameTotal').value = state.names.Total;
-  ['A','B','Total'].forEach(k => {
-    const el = document.getElementById('title'+k);
-    if (el) el.textContent = state.names[k];
+  ['A','B'].forEach(k => {
+    document.getElementById('title'+k).textContent = state.names[k];
+    document.getElementById('lbl-mv'+k).textContent = state.names[k];
   });
-  document.getElementById('lbl-mvA').textContent = state.names.A;
-  document.getElementById('lbl-mvB').textContent = state.names.B;
-  document.getElementById('lbl-balA').textContent = state.names.A;
-  document.getElementById('lbl-balB').textContent = state.names.B;
 
-  // Calc A
-  const debA  = state.movements.A.filter(m => m.type === 'dep').reduce((s,m) => s + m.amount, 0);
-  const credA = state.movements.A.filter(m => m.type === 'cred').reduce((s,m) => s + m.amount, 0);
-  const finalA = state.balances.A - debA + credA;
-  document.getElementById('initBalA').textContent = fmt(state.balances.A);
-  document.getElementById('spendA').textContent = fmt(debA);
-  setAmt('finalBalA', finalA);
+  // calculs A
+  const debA  = state.movements.A.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
+  const credA = state.movements.A.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
+  document.getElementById('debA').textContent  = fmt(debA);
+  document.getElementById('credA').textContent = fmt(credA);
+  document.getElementById('netA').textContent  = fmt(credA - debA);
+  setColor('netA', credA - debA);
 
-  // Calc B
-  const debB  = state.movements.B.filter(m => m.type === 'dep').reduce((s,m) => s + m.amount, 0);
-  const credB = state.movements.B.filter(m => m.type === 'cred').reduce((s,m) => s + m.amount, 0);
-  const finalB = state.balances.B - debB + credB;
-  document.getElementById('initBalB').textContent = fmt(state.balances.B);
-  document.getElementById('spendB').textContent = fmt(debB);
-  setAmt('finalBalB', finalB);
+  // calculs B
+  const debB  = state.movements.B.filter(m=>m.type==='dep').reduce((s,m)=>s+m.amount,0);
+  const credB = state.movements.B.filter(m=>m.type==='cred').reduce((s,m)=>s+m.amount,0);
+  document.getElementById('debB').textContent  = fmt(debB);
+  document.getElementById('credB').textContent = fmt(credB);
+  document.getElementById('netB').textContent  = fmt(credB - debB);
+  setColor('netB', credB - debB);
 
-  // Total
-  document.getElementById('initBalTotal').textContent = fmt(state.balances.A + state.balances.B);
-  document.getElementById('spendTotal').textContent = fmt(debA + debB);
-  setAmt('finalBalTotal', finalA + finalB);
+  // solde commun
+  const totalDeb  = debA + debB;
+  const totalCred = credA + credB;
+  const encours   = state.solde - totalDeb + totalCred;
+  document.getElementById('initBalDisplay').textContent = fmt(state.solde);
+  document.getElementById('totalDebits').textContent    = fmt(totalDeb);
+  document.getElementById('totalCredits').textContent   = fmt(totalCred);
+  document.getElementById('totalEncours').textContent   = fmt(encours);
+  setColor('totalEncours', encours);
 
-  // Lists
+  // listes
   renderList('mvA', state.movements.A, false, 'A');
   renderList('mvB', state.movements.B, false, 'B');
   const combined = [
-    ...state.movements.A.map(m => ({...m, owner:'A'})),
-    ...state.movements.B.map(m => ({...m, owner:'B'}))
-  ].sort((a,b) => b.id - a.id);
+    ...state.movements.A.map(m=>({...m, owner:'A'})),
+    ...state.movements.B.map(m=>({...m, owner:'B'}))
+  ].sort((a,b)=>b.id-a.id);
   renderList('mvTotal', combined, true, null);
 }
 
-function setAmt(id, val) {
+function setColor(id, val) {
   const el = document.getElementById(id);
-  el.textContent = fmt(val);
-  el.className = 'bal-amount ' + (val < 0 ? 'negative' : 'neutral');
+  el.className = val < 0 ? 'neg' : val > 0 ? 'pos' : 'ora';
 }
 
-function renderList(containerId, items, showOwner, who) {
-  const el = document.getElementById(containerId);
+function renderList(cid, items, showOwner, who) {
+  const el = document.getElementById(cid);
   if (!items.length) { el.innerHTML = '<div class="empty-mv">Aucun mouvement</div>'; return; }
   el.innerHTML = items.map(m => {
     const owner = showOwner ? m.owner : who;
     const ownerDot = showOwner
       ? `<span class="mv-owner-dot" style="background:var(--accent-${m.owner.toLowerCase()})"></span>` : '';
-    const sign = m.type === 'cred' ? '+' : '−';
-    const badge = m.type === 'dep' ? 'débit' : 'crédit';
+    const ownerLabel = showOwner
+      ? `<span class="mv-badge" style="border-color:var(--accent-${m.owner.toLowerCase()});color:var(--accent-${m.owner.toLowerCase()})">${state.names[m.owner]}</span>` : '';
+    const sign = m.type==='cred' ? '+' : '−';
     return `<div class="mv-item">
       ${ownerDot}
-      <span class="mv-date">${m.date}</span>
+      <span class="mv-date">${m.date||'—'}</span>
       <span class="mv-label">${m.label}</span>
-      <span class="mv-type-badge">${badge}</span>
+      ${ownerLabel}
+      <span class="mv-badge">${m.type==='dep'?'débit':'crédit'}</span>
       <span class="mv-amount ${m.type}">${sign}${fmt(m.amount)}</span>
-      <button class="btn-del-mv" onclick="delMv('${owner}',${m.id})" title="Supprimer">✕</button>
+      <button class="btn-del" onclick="delMv('${owner}',${m.id})" title="Supprimer">✕</button>
     </div>`;
   }).join('');
 }
 
-function addMovement(who) {
-  const label = document.getElementById('label'+who).value.trim();
+function addMv(who) {
+  const date   = document.getElementById('date'+who).value.trim();
+  const label  = document.getElementById('label'+who).value.trim();
   const amount = parseFloat(document.getElementById('amount'+who).value);
-  const type = document.getElementById('type'+who).value;
+  const type   = document.getElementById('type'+who).value;
   if (!label || isNaN(amount) || amount <= 0) { alert('Libellé et montant requis.'); return; }
-  state.movements[who].unshift({ id: Date.now(), date: today(), label, amount, type });
-  saveState();
+  state.movements[who].unshift({ id: Date.now(), date, label, amount, type });
+  save();
+  document.getElementById('date'+who).value = '';
   document.getElementById('label'+who).value = '';
   document.getElementById('amount'+who).value = '';
   render();
 }
 
 function delMv(who, id) {
-  state.movements[who] = state.movements[who].filter(m => m.id !== id);
-  saveState(); render();
+  state.movements[who] = state.movements[who].filter(m=>m.id!==id);
+  save(); render();
 }
 
-// ── Inline balance edit ──
-function startEditBal(who) {
-  const cell = document.getElementById('cellInit'+who);
-  const cur = state.balances[who];
-  cell.innerHTML = `
-    <label>Solde départ</label>
-    <div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:2px;">
-      <input class="bal-input-inline" id="editBal${who}" type="number" value="${cur}" step="0.01">
-      <button class="btn-edit-bal" onclick="saveBal('${who}')" title="Valider" style="color:var(--green);font-size:1rem;">✔</button>
-      <button class="btn-edit-bal" onclick="cancelBal('${who}')" title="Annuler" style="color:var(--red);font-size:1rem;">✕</button>
-    </div>`;
-  const inp = document.getElementById('editBal'+who);
+// Solde départ inline
+function startEditBal() {
+  const wrap = document.getElementById('soldeDepart');
+  wrap.innerHTML = `
+    <input class="bal-input-inline" id="editSolde" type="number" value="${state.solde}" step="0.01">
+    <button class="btn-edit-bal" onclick="saveBal()" style="color:var(--green);font-size:1.1rem;">✔</button>
+    <button class="btn-edit-bal" onclick="render()" style="color:var(--red);font-size:1.1rem;">✕</button>`;
+  const inp = document.getElementById('editSolde');
   inp.focus(); inp.select();
-  inp.addEventListener('keydown', e => {
-    if (e.key === 'Enter') saveBal(who);
-    if (e.key === 'Escape') cancelBal(who);
-  });
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') saveBal(); if(e.key==='Escape') render(); });
 }
-function saveBal(who) {
-  const inp = document.getElementById('editBal'+who);
-  if (inp) {
-    const val = parseFloat(inp.value);
-    if (!isNaN(val)) { state.balances[who] = val; saveState(); }
-  }
+function saveBal() {
+  const v = parseFloat(document.getElementById('editSolde')?.value);
+  if (!isNaN(v)) { state.solde = v; save(); }
   render();
 }
-function cancelBal(who) { render(); }
 
-// ── Names ──
-['A','B','Total'].forEach(k => {
+// Noms
+['A','B'].forEach(k => {
   document.getElementById('name'+k).addEventListener('input', function() {
-    state.names[k] = this.value || k; saveState(); render();
+    state.names[k] = this.value || k; save(); render();
   });
 });
 
-// ── Modal ──
+// Modal
 const modalCfg = {
   movements: {
     title: '🗑 Effacer tous les mouvements',
-    desc: 'Les mouvements de A et B seront supprimés. Les soldes de départ sont conservés.',
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Confirmer', c:'confirm-danger', a:'doMovements' }]
+    desc: 'Les mouvements de A et B seront supprimés. Le solde de départ est conservé.',
+    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovements'}]
   },
-  balances: {
-    title: '↺ Réinitialiser les soldes',
-    desc: 'Les soldes de départ seront remis à 0. Les mouvements sont conservés.',
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Confirmer', c:'confirm-danger', a:'doBalances' }]
+  solde: {
+    title: '✏ Modifier le solde de départ',
+    desc: 'Saisissez le nouveau solde de départ commun :',
+    btns: [{l:'Annuler',c:'',a:'close'},{l:'Enregistrer',c:'confirm-ok',a:'doSolde'}],
+    input: true
   },
   all: {
     title: '⚠ Tout effacer',
-    desc: 'Mouvements ET soldes seront supprimés. Action irréversible.',
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Tout effacer', c:'confirm-danger', a:'doAll' }]
+    desc: 'Mouvements ET solde de départ seront supprimés. Action irréversible.',
+    btns: [{l:'Annuler',c:'',a:'close'},{l:'Tout effacer',c:'confirm-danger',a:'doAll'}]
   },
   movA: {
     title: () => `Effacer mouvements · ${state.names.A}`,
     desc: () => `Tous les mouvements de ${state.names.A} seront supprimés.`,
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Confirmer', c:'confirm-danger', a:'doMovA' }]
+    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovA'}]
   },
   movB: {
     title: () => `Effacer mouvements · ${state.names.B}`,
     desc: () => `Tous les mouvements de ${state.names.B} seront supprimés.`,
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Confirmer', c:'confirm-danger', a:'doMovB' }]
-  },
-  balA: {
-    title: () => `Solde départ · ${state.names.A}`,
-    desc: () => `Nouveau solde de départ pour ${state.names.A} :`,
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Enregistrer', c:'confirm-ok', a:'doBalA' }],
-    input: true, who: 'A'
-  },
-  balB: {
-    title: () => `Solde départ · ${state.names.B}`,
-    desc: () => `Nouveau solde de départ pour ${state.names.B} :`,
-    btns: [{ l:'Annuler', c:'', a:'close' }, { l:'Enregistrer', c:'confirm-ok', a:'doBalB' }],
-    input: true, who: 'B'
+    btns: [{l:'Annuler',c:'',a:'close'},{l:'Confirmer',c:'confirm-danger',a:'doMovB'}]
   }
 };
 
 function openModal(type) {
   const cfg = modalCfg[type];
-  document.getElementById('modalTitle').textContent = typeof cfg.title === 'function' ? cfg.title() : cfg.title;
-  let desc = typeof cfg.desc === 'function' ? cfg.desc() : cfg.desc;
-  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.balances[cfg.who]}" step="0.01">`;
+  document.getElementById('modalTitle').textContent = typeof cfg.title==='function' ? cfg.title() : cfg.title;
+  let desc = typeof cfg.desc==='function' ? cfg.desc() : cfg.desc;
+  if (cfg.input) desc += `<input id="modalInput" class="modal-input" type="number" value="${state.solde}" step="0.01">`;
   document.getElementById('modalDesc').innerHTML = desc;
   document.getElementById('modalBtns').innerHTML = cfg.btns.map(b =>
-    `<button class="btn-modal ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`
-  ).join('');
+    `<button class="btn-modal ${b.c}" onclick="handleModal('${b.a}')">${b.l}</button>`).join('');
   document.getElementById('modalOverlay').classList.remove('hidden');
   const inp = document.getElementById('modalInput');
   if (inp) { inp.focus(); inp.select(); }
@@ -681,13 +518,11 @@ function openModal(type) {
 
 function handleModal(action) {
   switch(action) {
-    case 'doMovements': state.movements.A=[]; state.movements.B=[]; saveState(); break;
-    case 'doBalances':  state.balances.A=0; state.balances.B=0; saveState(); break;
-    case 'doAll': state.movements.A=[]; state.movements.B=[]; state.balances.A=0; state.balances.B=0; saveState(); break;
-    case 'doMovA': state.movements.A=[]; saveState(); break;
-    case 'doMovB': state.movements.B=[]; saveState(); break;
-    case 'doBalA': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.balances.A=v;saveState();} break; }
-    case 'doBalB': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.balances.B=v;saveState();} break; }
+    case 'doMovements': state.movements.A=[]; state.movements.B=[]; save(); break;
+    case 'doSolde': { const v=parseFloat(document.getElementById('modalInput')?.value); if(!isNaN(v)){state.solde=v;save();} break; }
+    case 'doAll': state.movements.A=[]; state.movements.B=[]; state.solde=0; save(); break;
+    case 'doMovA': state.movements.A=[]; save(); break;
+    case 'doMovB': state.movements.B=[]; save(); break;
   }
   document.getElementById('modalOverlay').classList.add('hidden');
   render();
